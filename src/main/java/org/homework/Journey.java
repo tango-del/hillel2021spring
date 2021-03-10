@@ -24,23 +24,6 @@ public class Journey {
         this.route = stationFrom + "->" + stationTo;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Journey journey = (Journey) o;
-        return Objects.equals(stationFrom, journey.stationFrom) &&
-                Objects.equals(stationTo, journey.stationTo) &&
-                Objects.equals(departure, journey.departure) &&
-                Objects.equals(arrival, journey.arrival) &&
-                Objects.equals(route, journey.route);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(stationFrom, stationTo, departure, arrival, route);
-    }
-
     public String getStationFrom() {
         return stationFrom;
     }
@@ -59,6 +42,23 @@ public class Journey {
 
     public String getRoute() {
         return route;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Journey journey = (Journey) o;
+        return Objects.equals(stationFrom, journey.stationFrom) &&
+                Objects.equals(stationTo, journey.stationTo) &&
+                Objects.equals(departure, journey.departure) &&
+                Objects.equals(arrival, journey.arrival) &&
+                Objects.equals(route, journey.route);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(stationFrom, stationTo, departure, arrival, route);
     }
 
     @Override
