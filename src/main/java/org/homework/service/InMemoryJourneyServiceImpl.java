@@ -7,11 +7,16 @@ import java.util.*;
 
 public class InMemoryJourneyServiceImpl implements JourneyService {
 
+    private final String id;
+    public InMemoryJourneyServiceImpl(final String id) {
+        this.id = id;
+    }
+
     /*
-    На один маршрут может быть несколько Journey
-    например:
-    Одесса - Киев может иметь несколько маршрутов
-     */
+        На один маршрут может быть несколько Journey
+        например:
+        Одесса - Киев может иметь несколько маршрутов
+         */
     private Map<String, List<Journey> > storage = new HashMap<>();
 
     // выполнится при инициализации объекта класса

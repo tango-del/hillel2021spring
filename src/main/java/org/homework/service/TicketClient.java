@@ -25,7 +25,7 @@ public class TicketClient {
 
     public static void main(String[] args) {
 
-        final JourneyService journeyService = new InMemoryJourneyServiceImpl();
+        final JourneyService journeyService = new InMemoryJourneyServiceImpl("");
         final TicketClient client = new TicketClient(journeyService);
 
         System.out.println(client.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
