@@ -13,7 +13,7 @@ public class Starter {
 
         System.out.println(journeyService.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
 
-        // можем оберуть в какой-то Exception красивый для клиента
+        // можем обернуть в какой-то Exception красивый для клиента
         System.out.println(journeyService.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(6)));
     }
 }
