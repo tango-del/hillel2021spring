@@ -21,9 +21,11 @@ public class Starter {
 
         System.out.println("after init");
         // дай нам bean у которых объекты имеют тип как JourneyService
-        final JourneyService journeyService = applicationContext.getBean(JourneyService.class);
+        JourneyService journeyService = applicationContext.getBean("inMemoryJourneyService", JourneyService.class);
         System.out.println(journeyService.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
-        System.out.println(journeyService.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(6)));
+
+        journeyService = applicationContext.getBean("inMemoryJourneyService", JourneyService.class);
+        System.out.println(journeyService.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
     }
 
     private static void beanFactorySpringInit() {
