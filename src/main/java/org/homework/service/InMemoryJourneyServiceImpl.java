@@ -15,7 +15,7 @@ public class InMemoryJourneyServiceImpl implements JourneyService {
 
 //    private final String id;
     public InMemoryJourneyServiceImpl() {
-        System.out.println("call constructor InMemoryJourneyServiceImpl");
+//        System.out.println("call constructor InMemoryJourneyServiceImpl");
 //        this.id = id;
     }
 

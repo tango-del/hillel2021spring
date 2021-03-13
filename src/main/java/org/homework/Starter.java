@@ -2,6 +2,9 @@ package org.homework;
 
 import org.homework.config.RootConfig;
 import org.homework.context.AppContext;
+import org.homework.dbjourneyservice.Connect;
+import org.homework.dbjourneyservice.Connection;
+import org.homework.service.DatabaseJourneyServiceImpl;
 import org.homework.service.JourneyService;
 import org.homework.service.TicketClient;
 import org.springframework.beans.factory.BeanFactory;
@@ -12,6 +15,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 /*
@@ -21,8 +26,16 @@ import java.time.LocalDate;
   Также в папке resources должен быть скрипт создания таблиц.
  */
 public class Starter {
-    public static void main(String[] args) {
-        autowireConstructorTicketClient();
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
+
+        final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("common-beans.xml");
+
+        JourneyService journeyService = applicationContext.getBean("dbService", JourneyService.class);
+        journeyService = applicationContext.getBean("dbService", JourneyService.class);
+
+        System.out.println(journeyService.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
+        System.out.println(journeyService.find("Kiev", "Odessa", LocalDate.now(), LocalDate.now().plusDays(1)));
+
     }
 
     private static void autowireConstructorTicketClient() {
