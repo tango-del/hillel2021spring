@@ -15,8 +15,21 @@ import java.time.LocalDate;
 
 public class Starter {
     public static void main(String[] args) {
-//        xmlBeanAppContextSpringInit();
-        javaAnnotationsConfigAppContextSpringInit();
+        //javaAnnotationsConfigAppContextSpringInit();
+        xmlWithAnnotationsBeanAppContextSpringInit();
+    }
+
+    private static void xmlWithAnnotationsBeanAppContextSpringInit() {
+        final ApplicationContext applicationContext =
+                new ClassPathXmlApplicationContext("common-beans-with-annotations.xml");
+
+        System.out.println("after init");
+        // дай нам bean у которых объекты имеют тип как JourneyService
+        JourneyService journeyService = applicationContext.getBean("TestName", JourneyService.class);
+        System.out.println(journeyService.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
+
+        journeyService = applicationContext.getBean("TestName", JourneyService.class);
+        System.out.println(journeyService.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
     }
 
     private static void javaAnnotationsConfigAppContextSpringInit() {
