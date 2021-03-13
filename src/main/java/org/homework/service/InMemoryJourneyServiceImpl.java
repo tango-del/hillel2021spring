@@ -1,23 +1,29 @@
 package org.homework.service;
 
 import org.homework.Journey;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.*;
 
+//@Component("inMemoryJourneyService")
 public class InMemoryJourneyServiceImpl implements JourneyService {
 
-    private final String id;
-    public InMemoryJourneyServiceImpl(final String id) {
+//    private final String id;
+    public InMemoryJourneyServiceImpl() {
         System.out.println("call constructor InMemoryJourneyServiceImpl");
-        this.id = id;
+//        this.id = id;
     }
 
     /*
-        На один маршрут может быть несколько Journey
-        например:
-        Одесса - Киев может иметь несколько маршрутов
-         */
+            На один маршрут может быть несколько Journey
+            например:
+            Одесса - Киев может иметь несколько маршрутов
+             */
     private Map<String, List<Journey> > storage = new HashMap<>();
 
     // выполнится при инициализации объекта класса

@@ -3,6 +3,7 @@ package org.homework;
 import org.homework.config.RootConfig;
 import org.homework.context.AppContext;
 import org.homework.service.JourneyService;
+import org.homework.service.TicketClient;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.context.ApplicationContext;
@@ -15,8 +16,17 @@ import java.time.LocalDate;
 
 public class Starter {
     public static void main(String[] args) {
-        //javaAnnotationsConfigAppContextSpringInit();
-        xmlWithAnnotationsBeanAppContextSpringInit();
+        autowireConstructorTicketClient();
+    }
+
+    private static void autowireConstructorTicketClient() {
+        final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("common-beans-with-annotations.xml");
+        System.out.println("after init");
+        TicketClient ticketClient = applicationContext.getBean(TicketClient.class);
+        System.out.println(ticketClient.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
+
+        ticketClient = applicationContext.getBean(TicketClient.class);
+        System.out.println(ticketClient.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
     }
 
     private static void xmlWithAnnotationsBeanAppContextSpringInit() {
@@ -25,11 +35,11 @@ public class Starter {
 
         System.out.println("after init");
         // дай нам bean у которых объекты имеют тип как JourneyService
-        JourneyService journeyService = applicationContext.getBean("TestName", JourneyService.class);
+        JourneyService journeyService = applicationContext.getBean("inMemoryJourneyService", JourneyService.class);
         System.out.println(journeyService.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
 
-        journeyService = applicationContext.getBean("TestName", JourneyService.class);
-        System.out.println(journeyService.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
+//        journeyService = applicationContext.getBean("inMemoryJourneyService", JourneyService.class);
+//        System.out.println(journeyService.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
     }
 
     private static void javaAnnotationsConfigAppContextSpringInit() {
@@ -37,10 +47,10 @@ public class Starter {
 
         System.out.println("after init");
         // дай нам bean у которых объекты имеют тип как JourneyService
-        JourneyService journeyService = applicationContext.getBean("TestName", JourneyService.class);
+        JourneyService journeyService = applicationContext.getBean("inMemoryJourneyService", JourneyService.class);
         System.out.println(journeyService.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
 
-        journeyService = applicationContext.getBean("TestName", JourneyService.class);
+        journeyService = applicationContext.getBean("inMemoryJourneyService", JourneyService.class);
         System.out.println(journeyService.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
     }
 

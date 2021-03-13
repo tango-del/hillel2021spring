@@ -3,8 +3,8 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="inMemoryJourneyService" class="org.homework.service.InMemoryJourneyServiceImpl" scope="prototype">
-        <constructor-arg name="id" value="1"/>
+    <bean id="inMemoryJourneyService" class="org.homework.service.InMemoryJourneyServiceImpl">
+<!--        <constructor-arg name="id" value="1"/>-->
     </bean>
 
     <bean name="stub, stub2, stubJourneyService" class="org.homework.service.StubJourneyServiceImpl"/>

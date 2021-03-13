@@ -1,16 +1,20 @@
 package org.homework.service;
 
 import org.homework.Journey;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.Collection;
 
 // клиентский сервис который будет дёргать JourneyService
+//@Component
 public class TicketClient {
 
     private JourneyService journeyService; // не будем оперировать какой-то конкретно реализацией, а интерфейсом
 
-    public TicketClient(JourneyService journeyService) {
+    public TicketClient(@Qualifier("inMemoryJourneyService") JourneyService journeyService) {
+//    public TicketClient(JourneyService journeyService) {
         this.journeyService = journeyService;
     }
 
@@ -25,7 +29,7 @@ public class TicketClient {
 
     public static void main(String[] args) {
 
-        final JourneyService journeyService = new InMemoryJourneyServiceImpl("");
+        final JourneyService journeyService = new InMemoryJourneyServiceImpl();
         final TicketClient client = new TicketClient(journeyService);
 
         System.out.println(client.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
