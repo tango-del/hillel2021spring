@@ -24,10 +24,10 @@ public class Starter {
 
         System.out.println("after init");
         // дай нам bean у которых объекты имеют тип как JourneyService
-        JourneyService journeyService = applicationContext.getBean("inMemoryJourneyService", JourneyService.class);
+        JourneyService journeyService = applicationContext.getBean("TestName", JourneyService.class);
         System.out.println(journeyService.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
 
-        journeyService = applicationContext.getBean("inMemoryJourneyService", JourneyService.class);
+        journeyService = applicationContext.getBean("TestName", JourneyService.class);
         System.out.println(journeyService.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
     }
 

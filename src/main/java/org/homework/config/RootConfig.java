@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Scope;
 @Configuration
 public class RootConfig {
 
-    @Bean
+    @Bean("TestName")
     public JourneyService inMemoryJourneyService() {
         return new InMemoryJourneyServiceImpl("1");
     }
