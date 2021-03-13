@@ -9,6 +9,7 @@ public class InMemoryJourneyServiceImpl implements JourneyService {
 
     private final String id;
     public InMemoryJourneyServiceImpl(final String id) {
+        System.out.println("call constructor InMemoryJourneyServiceImpl");
         this.id = id;
     }
 
