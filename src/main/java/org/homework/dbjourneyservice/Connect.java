@@ -8,16 +8,20 @@ public class Connect implements org.homework.dbjourneyservice.Connection {
     private final String URL;
     private final String USER;
     private final String PASS;
-    private static java.sql.Connection connection;
+    private java.sql.Connection connection;
 
     public Connect(final String URL, final String USER, final String PASS) {
         if (URL == null) throw new IllegalArgumentException("URL must be set");
+        if (USER == null) throw new IllegalArgumentException("USER must be set");
+        if (PASS == null) throw new IllegalArgumentException("PASS must be set");
+
         this.URL = URL;
         this.USER = USER;
         this.PASS = PASS;
     }
 
-    public static Connection getConnection() {
+    @Override
+    public Connection getConnection() {
         return connection;
     }
 

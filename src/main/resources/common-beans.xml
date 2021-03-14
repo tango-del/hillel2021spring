@@ -3,15 +3,15 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="inMemoryJourneyService" class="org.homework.service.InMemoryJourneyServiceImpl">
+    <bean id="inMemoryJourneyService" class="org.homework.service.InMemoryJourneyServiceImpl" lazy-init="true">
 <!--        <constructor-arg name="id" value="1"/>-->
     </bean>
 
-    <bean name="dbService" class="org.homework.service.DatabaseJourneyServiceImpl">
+    <bean name="dbService" class="org.homework.service.DatabaseJourneyServiceImpl" lazy-init="true">
         <constructor-arg name="URL" value="jdbc:postgresql://localhost:5432/spring_2021"/>
         <constructor-arg name="USER" value="postgres"/>
         <constructor-arg name="PASS" value="Sobik2010"/>
     </bean>
 
-    <bean name="stub, stub2, stubJourneyService" class="org.homework.service.StubJourneyServiceImpl"/>
+    <bean name="stub, stub2, stubJourneyService" class="org.homework.service.StubJourneyServiceImpl" lazy-init="true"/>
 </beans>
