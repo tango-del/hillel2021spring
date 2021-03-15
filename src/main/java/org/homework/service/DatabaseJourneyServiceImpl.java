@@ -15,7 +15,7 @@ import java.util.*;
 
 public class DatabaseJourneyServiceImpl implements JourneyService {
 
-    private Connection connect;
+    private final Connection connect;
     private Statement statement;
     private ResultSet resultSet;
 
