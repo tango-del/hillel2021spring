@@ -3,6 +3,9 @@ package org.homework.service;
 import org.homework.Journey;
 import org.homework.dbjourneyservice.Connect;
 import org.homework.dbjourneyservice.Connection;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,17 +15,21 @@ import java.util.*;
 
 public class DatabaseJourneyServiceImpl implements JourneyService {
 
-    private final Connection connect;
+    private Connection connect;
     private Statement statement;
     private ResultSet resultSet;
 
-    public DatabaseJourneyServiceImpl(final String URL, final String USER, final String PASS) {
-        if (URL == null) throw new IllegalArgumentException("URL must be set");
-        if (USER == null) throw new IllegalArgumentException("USER must be set");
-        if (PASS == null) throw new IllegalArgumentException("PASS must be set");
-
-        connect = new Connect(URL, USER, PASS);
+    public DatabaseJourneyServiceImpl(Connection connect) {
+        this.connect = connect;
     }
+
+    //    public DatabaseJourneyServiceImpl(final String URL, final String USER, final String PASS) {
+//        if (URL == null) throw new IllegalArgumentException("URL must be set");
+//        if (USER == null) throw new IllegalArgumentException("USER must be set");
+//        if (PASS == null) throw new IllegalArgumentException("PASS must be set");
+//
+//        connect = new Connect(URL, USER, PASS);
+//    }
 
     @Override
     public Collection<Journey> find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {
