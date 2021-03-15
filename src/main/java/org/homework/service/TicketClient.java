@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 // клиентский сервис который будет дёргать JourneyService
-//@Component
 public class TicketClient {
 
     private JourneyService journeyService; // не будем оперировать какой-то конкретно реализацией, а интерфейсом

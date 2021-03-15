@@ -19,17 +19,11 @@ public class DatabaseJourneyServiceImpl implements JourneyService {
     private Statement statement;
     private ResultSet resultSet;
 
-    public DatabaseJourneyServiceImpl(Connection connect) {
+    public DatabaseJourneyServiceImpl(final Connection connect) {
+        if (connect == null) throw new IllegalArgumentException("connect must be set");
+
         this.connect = connect;
     }
-
-    //    public DatabaseJourneyServiceImpl(final String URL, final String USER, final String PASS) {
-//        if (URL == null) throw new IllegalArgumentException("URL must be set");
-//        if (USER == null) throw new IllegalArgumentException("USER must be set");
-//        if (PASS == null) throw new IllegalArgumentException("PASS must be set");
-//
-//        connect = new Connect(URL, USER, PASS);
-//    }
 
     @Override
     public Collection<Journey> find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {
