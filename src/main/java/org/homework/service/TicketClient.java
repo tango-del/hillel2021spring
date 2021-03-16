@@ -1,6 +1,7 @@
 package org.homework.service;
 
 import org.homework.Journey;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -8,17 +9,17 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 // клиентский сервис который будет дёргать JourneyService
-public class TicketClient {
+public class TicketClient implements InitializingBean {
+
+    private JourneyService journeyService; // не будем оперировать какой-то конкретно реализацией, а интерфейсом
 
     @Autowired
     @Qualifier("inMemoryJourneyService")
-    private JourneyService journeyService; // не будем оперировать какой-то конкретно реализацией, а интерфейсом
+    public void setJourneyService(final JourneyService journeyService) {
+        if (journeyService == null) throw new IllegalArgumentException("journeyService must be set");
 
-    /*@Autowired
-    @Qualifier("inMemoryJourneyService")
-    public void setJourneyService(JourneyService journeyService) {
         this.journeyService = journeyService;
-    }*/
+    }
 
     public TicketClient() {
     }
@@ -42,5 +43,12 @@ public class TicketClient {
 
         // можем оберуть в какой-то Exception красивый для клиента
         System.out.println(client.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(6)));
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        if (journeyService == null) throw new IllegalArgumentException("journeyService must be set");
+        else System.out.println("journeyService set successfully");
+
     }
 }
