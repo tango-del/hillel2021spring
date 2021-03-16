@@ -1,21 +1,24 @@
 package org.homework.service;
 
 import org.homework.Journey;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.Collection;
 
 // клиентский сервис который будет дёргать JourneyService
-//@Component
 public class TicketClient {
 
     private JourneyService journeyService; // не будем оперировать какой-то конкретно реализацией, а интерфейсом
 
-//    public TicketClient(@Qualifier("inMemoryJourneyService") JourneyService journeyService) {
-    public TicketClient(JourneyService journeyService) {
+    @Autowired
+    @Qualifier("inMemoryJourneyService")
+    public void setJourneyService(JourneyService journeyService) {
         this.journeyService = journeyService;
+    }
+
+    public TicketClient() {
     }
 
     public Collection<Journey> find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {
@@ -30,7 +33,8 @@ public class TicketClient {
     public static void main(String[] args) {
 
         final JourneyService journeyService = new InMemoryJourneyServiceImpl();
-        final TicketClient client = new TicketClient(journeyService);
+//        final TicketClient client = new TicketClient(journeyService);
+        final TicketClient client = new TicketClient();
 
         System.out.println(client.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
 

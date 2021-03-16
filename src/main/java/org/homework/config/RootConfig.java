@@ -11,15 +11,14 @@ import org.springframework.context.annotation.*;
 public class RootConfig {
 
     @Bean
-    @Lazy
     public TicketClient ticketClient() {
-        return new TicketClient(getInMemoryJourneyService());
+//        return new TicketClient(getInMemoryJourneyService());
+        return new TicketClient();
     }
 
     @Bean("inMemoryJourneyService")
-    @Lazy
     public JourneyService getInMemoryJourneyService() {
-        System.out.println("call getInMemoryJourneyService");
+        System.out.println("call getInMemoryJourneyService() in RootConfig.class");
         return new InMemoryJourneyServiceImpl();
     }
 
