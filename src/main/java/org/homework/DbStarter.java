@@ -6,12 +6,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.time.LocalDate;
 
-/*
- TODO
-  В рамках Spring проекта, который писали в классе, необходимо реализовать возможность поиска маршрутов,
-  информация о которых хранится в базе данных. Коннекшн к базе получать через стандартный jdbc.
-  Также в папке resources должен быть скрипт создания таблиц.
- */
 public class DbStarter {
     public static void main(String[] args) {
         final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("common-beans.xml");
