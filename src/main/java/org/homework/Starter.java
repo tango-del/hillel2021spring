@@ -2,9 +2,6 @@ package org.homework;
 
 import org.homework.config.RootConfig;
 import org.homework.context.AppContext;
-import org.homework.dbjourneyservice.Connect;
-import org.homework.dbjourneyservice.Connection;
-import org.homework.service.DatabaseJourneyServiceImpl;
 import org.homework.service.JourneyService;
 import org.homework.service.TicketClient;
 import org.springframework.beans.factory.BeanFactory;
@@ -15,17 +12,16 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class Starter {
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-
+    public static void main(String[] args) {
+        autowireConstructorTicketClient();
     }
 
     private static void autowireConstructorTicketClient() {
-        final ApplicationContext applicationContext = new ClassPathXmlApplicationContext("common-beans-with-annotations.xml");
+        final ApplicationContext applicationContext =
+                new ClassPathXmlApplicationContext("common-beans-with-annotations.xml");
         System.out.println("after init");
         TicketClient ticketClient = applicationContext.getBean(TicketClient.class);
         System.out.println(ticketClient.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
@@ -74,7 +70,7 @@ public class Starter {
     private static void xmlBeanFactorySpringInit() {
         // поднимается контекст в рамках маленького bean factory который мало что умеет
         final BeanFactory beanFactory = new XmlBeanFactory(new ClassPathResource("common-beans.xml"));
-        final JourneyService journeyService = beanFactory.getBean(JourneyService.class);
+        final JourneyService journeyService = beanFactory.getBean("inMemoryJourneyService", JourneyService.class);
         System.out.println(journeyService.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
         System.out.println(journeyService.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(6)));
     }

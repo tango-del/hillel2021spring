@@ -6,9 +6,9 @@
                            http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="org.homework.config"/>
-<!--    <bean class="org.homework.service.TicketClient">-->
+<!--    <bean class="org.homework.service.TicketClient" lazy-init="true">-->
 <!--        <constructor-arg name="journeyService" ref="inm"/>-->
 <!--    </bean>-->
 
-<!--    <bean id="inm" class="org.homework.service.InMemoryJourneyServiceImpl"/>-->
+<!--    <bean id="inm" class="org.homework.service.InMemoryJourneyServiceImpl" lazy-init="true"/>-->
 </beans>
