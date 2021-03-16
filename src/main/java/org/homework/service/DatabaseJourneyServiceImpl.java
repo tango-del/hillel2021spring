@@ -1,11 +1,7 @@
 package org.homework.service;
 
 import org.homework.Journey;
-import org.homework.dbjourneyservice.Connect;
 import org.homework.dbjourneyservice.Connection;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
