@@ -10,13 +10,15 @@ import java.util.Collection;
 // клиентский сервис который будет дёргать JourneyService
 public class TicketClient {
 
+    @Autowired
+    @Qualifier("inMemoryJourneyService")
     private JourneyService journeyService; // не будем оперировать какой-то конкретно реализацией, а интерфейсом
 
-    @Autowired
+    /*@Autowired
     @Qualifier("inMemoryJourneyService")
     public void setJourneyService(JourneyService journeyService) {
         this.journeyService = journeyService;
-    }
+    }*/
 
     public TicketClient() {
     }
