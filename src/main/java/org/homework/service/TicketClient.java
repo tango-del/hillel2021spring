@@ -28,10 +28,10 @@ public class TicketClient {
     system.message -> ищет property с таким названием
     если system.message отсутствует то выведет дефолт значение после двоиточего 'default value'
      */
-//    @Value("${system.message:default value}")
-//    private String systemMessage;
-    @Autowired
-    private Environment environment;
+    @Value("${system.message:default value}")
+    private String systemMessage;
+//    @Autowired
+//    private Environment environment;
 
     @Autowired
     @Qualifier("inMemoryJourneyService")
@@ -72,8 +72,8 @@ public class TicketClient {
         } else {
             System.out.println("journeyService set successfully in method afterPropertiesSet() class TicketClient");
         }
-//        System.out.println(systemMessage); // -> @Value("${system.message}")
-        System.out.println(environment.getProperty("system.messag", "def")); // -> private Environment environment
+        System.out.println(systemMessage); // -> @Value("${system.message}")
+//        System.out.println(environment.getProperty("system.messag", "def")); // -> private Environment environment
 
     }
 
