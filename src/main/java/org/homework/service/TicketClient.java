@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 // клиентский сервис который будет дёргать JourneyService
 @Component
@@ -27,8 +28,11 @@ public class TicketClient {
 
     //private JourneyService journeyService; // не будем оперировать какой-то конкретно реализацией, а интерфейсом
 
+    /*@Autowired
+    private List<JourneyService> journeyServices;*/
+
     @Autowired
-    private List<JourneyService> journeyServices;
+    private Map<String, JourneyService> journeyServices;
 
     /*
     system.message -> ищет property с таким названием
@@ -59,16 +63,26 @@ public class TicketClient {
         // -> private JourneyService journeyService;
 //        return journeyService.find(stationFrom, stationTo, dateFrom, dateTo);
 
-        // private List<JourneyService> journeyServices;
+        /*// -> private List<JourneyService> journeyServices;
         for (JourneyService service : journeyServices) {
             System.out.println(service);
 
             final Collection<Journey> journeys = service.find(stationFrom, stationTo, dateFrom, dateTo);
 
             if (!CollectionUtils.isEmpty(journeys)) return journeys;
+        }*/
+
+        // -> private Map<String, JourneyService> journeyServices;
+        Collection<Journey> service = journeyServices
+                .get("inMemoryJourneyService").find(stationFrom, stationTo, dateFrom, dateTo);
+
+        if (service == null) {
+            return Collections.emptyList();
         }
 
-        return Collections.emptyList();
+        return service;
+
+//        return Collections.emptyList();
     }
 
     public static void main(String[] args) {
