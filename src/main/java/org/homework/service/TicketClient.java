@@ -1,17 +1,37 @@
 package org.homework.service;
 
 import org.homework.Journey;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.time.LocalDate;
 import java.util.Collection;
 
 // клиентский сервис который будет дёргать JourneyService
-public class TicketClient implements InitializingBean {
+@Component
+//@Lazy
+public class TicketClient {
+//public class TicketClient implements DisposableBean { // -> без использования PreDestroy @Override destroy()
+//public class TicketClient implements InitializingBean { // -> без использования @PostConstruct @Override afterPropertiesSet()
 
     private JourneyService journeyService; // не будем оперировать какой-то конкретно реализацией, а интерфейсом
+
+    /*
+    system.message -> ищет property с таким названием
+    если system.message отсутствует то выведет дефолт значение после двоиточего 'default value'
+     */
+//    @Value("${system.message:default value}")
+//    private String systemMessage;
+    @Autowired
+    private Environment environment;
 
     @Autowired
     @Qualifier("inMemoryJourneyService")
@@ -45,10 +65,20 @@ public class TicketClient implements InitializingBean {
         System.out.println(client.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(6)));
     }
 
-    @Override
+    @PostConstruct
     public void afterPropertiesSet() throws Exception {
-        if (journeyService == null) throw new IllegalArgumentException("journeyService must be set");
-        else System.out.println("journeyService set successfully");
+        if (journeyService == null) {
+            throw new IllegalArgumentException("journeyService must be set");
+        } else {
+            System.out.println("journeyService set successfully in method afterPropertiesSet() class TicketClient");
+        }
+//        System.out.println(systemMessage); // -> @Value("${system.message}")
+        System.out.println(environment.getProperty("system.messag", "def")); // -> private Environment environment
 
+    }
+
+    @PreDestroy
+    public void destroy() throws Exception {
+        System.out.println("destroy bean in method destroy() class TicketClient");
     }
 }

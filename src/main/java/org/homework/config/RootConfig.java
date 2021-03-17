@@ -8,9 +8,10 @@ import org.springframework.context.annotation.*;
 
 @Configuration
 @ComponentScan("org.homework.service")
+@PropertySource({"application.properties", "database.properties"})
 public class RootConfig {
 
-    @Bean
+    /*@Bean
     public TicketClient ticketClient() {
 //        return new TicketClient(getInMemoryJourneyService());
         return new TicketClient();
@@ -33,5 +34,5 @@ public class RootConfig {
     @Lazy
     public JourneyService stubService() {
         return new StubJourneyServiceImpl();
-    }
+    }*/
 }

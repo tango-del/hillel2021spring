@@ -1,17 +1,19 @@
 package org.homework.service;
 
 import org.homework.Journey;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.*;
 
-//@Component("inMemoryJourneyService")
+@Component("inMemoryJourneyService")
 //@Lazy
 public class InMemoryJourneyServiceImpl implements JourneyService {
 
 //    private final String id;
     public InMemoryJourneyServiceImpl() {
-//        System.out.println("call constructor InMemoryJourneyServiceImpl");
+        System.out.println("call constructor InMemoryJourneyServiceImpl");
 //        this.id = id;
     }
 

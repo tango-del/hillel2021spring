@@ -1,13 +1,15 @@
 package org.homework.service;
 
 import org.homework.Journey;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.*;
 
 // класс заглушка
-//@Component("stub")
-//@Lazy
+@Component("stub")
+@Lazy
 public class StubJourneyServiceImpl implements JourneyService {
 
     @Override

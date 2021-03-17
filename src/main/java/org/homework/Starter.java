@@ -16,7 +16,19 @@ import java.time.LocalDate;
 
 public class Starter {
     public static void main(String[] args) {
-        autowireConstructorTicketClient();
+        javaAnnotationsConfigAppContextSpringInitTicketClient();
+    }
+
+    private static void javaAnnotationsConfigAppContextSpringInitTicketClient() {
+        final ApplicationContext applicationContext = new AnnotationConfigApplicationContext(RootConfig.class);
+
+        System.out.println(">>after init in Starter.class<<");
+
+        TicketClient ticketClient = applicationContext.getBean(TicketClient.class);
+
+        System.out.println(ticketClient.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
+
+        ((AnnotationConfigApplicationContext) applicationContext).close();
     }
 
     private static void autowireConstructorTicketClient() {
@@ -28,6 +40,8 @@ public class Starter {
 
         ticketClient = applicationContext.getBean(TicketClient.class);
         System.out.println(ticketClient.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
+
+        ((ClassPathXmlApplicationContext) applicationContext).close();
     }
 
     private static void xmlWithAnnotationsBeanAppContextSpringInit() {
@@ -51,8 +65,7 @@ public class Starter {
         JourneyService journeyService = applicationContext.getBean("inMemoryJourneyService", JourneyService.class);
         System.out.println(journeyService.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
 
-        journeyService = applicationContext.getBean("inMemoryJourneyService", JourneyService.class);
-        System.out.println(journeyService.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
+
     }
 
     private static void xmlBeanAppContextSpringInit() {
