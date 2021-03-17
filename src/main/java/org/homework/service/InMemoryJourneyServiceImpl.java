@@ -2,13 +2,15 @@ package org.homework.service;
 
 import org.homework.Journey;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.*;
 
 @Component("inMemoryJourneyService")
-//@Lazy
+@Lazy
+@Order(2)
 public class InMemoryJourneyServiceImpl implements JourneyService {
 
 //    private final String id;
@@ -76,5 +78,10 @@ public class InMemoryJourneyServiceImpl implements JourneyService {
            туда ничего не нужно добавлять
         */
         return Collections.unmodifiableList(out);
+    }
+
+    @Override
+    public String toString() {
+        return "InMemoryJourneyServiceImpl class toString";
     }
 }
