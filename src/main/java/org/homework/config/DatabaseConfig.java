@@ -49,7 +49,8 @@ public class DatabaseConfig {
 
         Properties properties = new Properties();
         properties.put("hibernate.dialect", PostgreSQL10Dialect.class.getName());
-        properties.put("hibernate.hbm2ddl.auto", "create-drop");
+//        properties.put("hibernate.hbm2ddl.auto", "create-drop");
+        properties.put("hibernate.hbm2ddl.auto", "update");
         properties.put("hibernate.show_sql", "true");
 
         emf.setJpaProperties(properties);
