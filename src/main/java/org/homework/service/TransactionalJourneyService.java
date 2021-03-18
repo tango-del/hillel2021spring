@@ -11,15 +11,16 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 @Service
-public class TransactionalJourneyService implements JourneyService {
+public class TransactionalJourneyService {
+//public class TransactionalJourneyService implements JourneyService {
 
     @Autowired
     private JourneyRepository journeyRepository;
 
-    @Override
-    public Collection<Journey> find(String stationFrom, String stationTo, LocalDate dateFrom, LocalDate dateTo) {
-        return null;
-    }
+//    @Override
+//    public Collection<Journey> find(String stationFrom, String stationTo, LocalDate dateFrom, LocalDate dateTo) {
+//        return null;
+//    }
 
     // TODO почему транзакции лучше ставить на наших сервисных сущностях чем в сущностях которые являются репозиторием
     @Transactional
