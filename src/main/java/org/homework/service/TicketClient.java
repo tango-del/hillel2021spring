@@ -1,6 +1,7 @@
 package org.homework.service;
 
 import org.homework.Journey;
+import org.homework.persistence.entity.JourneyEntity;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,9 @@ public class TicketClient {
     @Autowired
     private Map<String, JourneyService> journeyServices;
 
+    @Autowired
+    private TransactionalJourneyService transactionalJourneyService;
+
     /*
     system.message -> ищет property с таким названием
     если system.message отсутствует то выведет дефолт значение после двоиточего 'default value'
@@ -53,6 +57,10 @@ public class TicketClient {
     }*/
 
     public TicketClient() {
+    }
+
+    public Long createJourney(final JourneyEntity journeyEntity) {
+        return transactionalJourneyService.createJourney(journeyEntity);
     }
 
     public Collection<Journey> find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {
