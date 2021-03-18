@@ -31,6 +31,7 @@ public class TicketClient {
     /*@Autowired
     private List<JourneyService> journeyServices;*/
 
+    //@Autowired(required = false)
     @Autowired
     private Map<String, JourneyService> journeyServices;
 
