@@ -7,7 +7,8 @@ import org.homework.service.TicketClient;
 import org.springframework.context.annotation.*;
 
 @Configuration
-@ComponentScan("org.homework.service")
+@ComponentScan("org.homework")
+//@ComponentScan("org.homework.service")
 @PropertySource({"application.properties", "database.properties"})
 public class RootConfig {
 

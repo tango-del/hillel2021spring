@@ -2,6 +2,7 @@ package org.homework;
 
 import org.homework.config.RootConfig;
 import org.homework.context.AppContext;
+import org.homework.persistence.entity.JourneyEntity;
 import org.homework.service.JourneyService;
 import org.homework.service.TicketClient;
 import org.springframework.beans.factory.BeanFactory;
@@ -16,7 +17,18 @@ import java.time.LocalDate;
 
 public class Starter {
     public static void main(String[] args) {
-        javaAnnotationsConfigAppContextSpringInitTicketClient();
+        createJourneyEntityAndSaveToDatabaseWithHibernate();
+    }
+
+    private static void createJourneyEntityAndSaveToDatabaseWithHibernate() {
+        final ApplicationContext applicationContext = new AnnotationConfigApplicationContext(RootConfig.class);
+
+        TicketClient ticketClient = applicationContext.getBean(TicketClient.class);
+
+        JourneyEntity journeyEntity = new JourneyEntity();
+        journeyEntity.setStationFrom("Kiev");
+        System.out.println("create journey with id = " + ticketClient.createJourney(journeyEntity));
+        ((AnnotationConfigApplicationContext) applicationContext).close();
     }
 
     private static void javaAnnotationsConfigAppContextSpringInitTicketClient() {
