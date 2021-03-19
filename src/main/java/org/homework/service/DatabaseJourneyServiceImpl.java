@@ -18,6 +18,7 @@ public class DatabaseJourneyServiceImpl implements JourneyService {
     public DatabaseJourneyServiceImpl(final Connection connect) {
         if (connect == null) throw new IllegalArgumentException("connect must be set");
 
+
         this.connect = connect;
     }
 
