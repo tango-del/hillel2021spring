@@ -30,6 +30,7 @@ public final class AppContext {
         try(InputStream is = AppContext.class.getClassLoader().getResourceAsStream(fileName)) {
             properties.load(is);
         }
+
     }
 
     // не потоко безопасный
