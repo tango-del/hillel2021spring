@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="inMemoryJourneyService" class="org.homework.service.InMemoryJourneyServiceImpl" lazy-init="true">
@@ -18,4 +19,13 @@
     </bean>
 
     <bean name="stub, stub2, stubJourneyService" class="org.homework.service.StubJourneyServiceImpl" lazy-init="true"/>
+
+    <context:component-scan base-package="org.homework"/>
+    <!--    <context:component-scan base-package="org.homework.config"/>-->
+    <!--    <context:property-placeholder location="application.properties"/>-->
+    <!--    <bean class="org.homework.service.TicketClient" lazy-init="true">-->
+    <!--        <constructor-arg name="journeyService" ref="inm"/>-->
+    <!--    </bean>-->
+
+    <!--    <bean id="inm" class="org.homework.service.InMemoryJourneyServiceImpl" lazy-init="true"/>-->
 </beans>

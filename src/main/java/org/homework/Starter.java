@@ -45,7 +45,7 @@ public class Starter {
 
     private static void autowireConstructorTicketClient() {
         final ApplicationContext applicationContext =
-                new ClassPathXmlApplicationContext("common-beans-with-annotations.xml");
+                new ClassPathXmlApplicationContext("common-beans.xml");
         System.out.println("after init");
         TicketClient ticketClient = applicationContext.getBean(TicketClient.class);
         System.out.println(ticketClient.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
@@ -58,7 +58,7 @@ public class Starter {
 
     private static void xmlWithAnnotationsBeanAppContextSpringInit() {
         final ApplicationContext applicationContext =
-                new ClassPathXmlApplicationContext("common-beans-with-annotations.xml");
+                new ClassPathXmlApplicationContext("common-beans.xml");
 
         System.out.println("after init");
         // дай нам bean у которых объекты имеют тип как JourneyService
