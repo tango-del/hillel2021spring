@@ -1,31 +1,45 @@
 package org.homework.persistence.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "journey")
+@Getter
+@Setter
 public class JourneyEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "station_from", length = 1000, nullable = false)
+    @Column(name = "station_from", nullable = false)
     private String stationFrom;
 
-    public Long getId() {
-        return id;
-    }
+    @Column(name = "station_to", nullable = false)
+    private String stationTo;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Column(name = "departure", nullable = false)
+    private LocalDate departure;
 
-    public String getStationFrom() {
-        return stationFrom;
-    }
+    @Column(name = "arrival", nullable = false)
+    private LocalDate arrival;
 
-    public void setStationFrom(String stationFrom) {
-        this.stationFrom = stationFrom;
+    @Column(name = "route", nullable = false)
+    private String route;
+
+    @Override
+    public String toString() {
+        return "JourneyEntity{" +
+                "id=" + id +
+                ", stationFrom='" + stationFrom + '\'' +
+                ", stationTo='" + stationTo + '\'' +
+                ", departure=" + departure +
+                ", arrival=" + arrival +
+                ", route='" + route + '\'' +
+                '}';
     }
 }

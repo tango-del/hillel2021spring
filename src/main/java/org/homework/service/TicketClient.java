@@ -36,8 +36,8 @@ public class TicketClient {
     @Autowired
     private Map<String, JourneyService> journeyServices;
 
-    @Autowired
-    private TransactionalJourneyService transactionalJourneyService;
+    //@Autowired
+    //private TransactionalJourneyService transactionalJourneyService;
 
     /*
     system.message -> ищет property с таким названием
@@ -56,11 +56,14 @@ public class TicketClient {
         this.journeyService = journeyService;
     }*/
 
-    public TicketClient() {
+    public Long createJourney(final JourneyEntity journeyEntity) {
+        return ((TransactionalJourneyService)journeyServices.get("transactionJourneyService")).createJourney(journeyEntity);
+        //return transactionalJourneyService.createJourney(journeyEntity);
     }
 
-    public Long createJourney(final JourneyEntity journeyEntity) {
-        return transactionalJourneyService.createJourney(journeyEntity);
+    public Collection<JourneyEntity> test(String route) {
+        return ((TransactionalJourneyService)journeyServices.get("transactionJourneyService")).test(route);
+//        return transactionalJourneyService.test(route);
     }
 
     public Collection<Journey> find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {

@@ -7,6 +7,6 @@ import java.util.Collection;
 
 public interface JourneyService {
 
-    Collection<Journey> find(String stationFrom, String stationTo, LocalDate dateFrom, LocalDate dateTo);
+    <T> Collection<T> find(String stationFrom, String stationTo, LocalDate dateFrom, LocalDate dateTo);
 
 }

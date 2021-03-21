@@ -9,6 +9,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
 
 /*
  TODO
@@ -20,12 +22,23 @@ public class DbStarter {
     public static void main(String[] args) {
         final ApplicationContext applicationContext = new AnnotationConfigApplicationContext(RootConfig.class);
 
-        TicketClient ticketClient = applicationContext.getBean(TicketClient.class);
+        JourneyService journeyService = applicationContext.getBean("transactionJourneyService", JourneyService.class);
+
+        //TicketClient ticketClient = applicationContext.getBean(TicketClient.class);
 
         JourneyEntity journeyEntity = new JourneyEntity();
-        journeyEntity.setStationFrom("Kiev");
-        System.out.println("create journey with id = " + ticketClient.createJourney(journeyEntity));
-        ((AnnotationConfigApplicationContext) applicationContext).close();
+        journeyEntity.setStationFrom("Odessa");
+        journeyEntity.setStationTo("Kiev");
+        journeyEntity.setDeparture(LocalDate.now());
+        journeyEntity.setArrival(LocalDate.now().plusDays(1));
+        journeyEntity.setRoute("Odessa->Kiev");
+
+        journeyService.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1));
+
+//        final Collection<JourneyEntity> test = journeyService.find("Odessa->Kiev");
+//        test.forEach(System.out::println);
+        //System.out.println("create journey with id = " + ticketClient.createJourney(journeyEntity));
+        //((AnnotationConfigApplicationContext) applicationContext).close();
     }
 
     public static void jdbcConnect() {
