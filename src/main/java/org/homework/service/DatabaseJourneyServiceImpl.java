@@ -63,7 +63,7 @@ public class DatabaseJourneyServiceImpl implements JourneyService {
         try {
             connect.createConnection();
             statement = connect.getConnection().createStatement();
-            resultSet = statement.executeQuery(String.format("select * from database_journey_service.journey where route = '%s->%s'", stationFrom, stationTo));
+            resultSet = statement.executeQuery(String.format("select * from journey where route = '%s->%s'", stationFrom, stationTo));
 
         } catch (SQLException | ClassNotFoundException exception) {
             connect.getConnection().rollback();

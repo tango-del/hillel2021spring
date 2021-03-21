@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean name="connectToDb" class="org.homework.dbjourneyservice.Connect" lazy-init="true">
-        <constructor-arg name="URL" value="jdbc:postgresql://localhost:5432/spring_2021"/>
+        <constructor-arg name="URL" value="jdbc:postgresql://localhost:5432/postgres"/>
         <constructor-arg name="USER" value="postgres"/>
         <constructor-arg name="PASS" value="Sobik2010"/>
     </bean>
