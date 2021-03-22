@@ -1,11 +1,11 @@
 package org.homework.service;
 
-import org.homework.Journey;
 import org.homework.persistence.entity.JourneyEntity;
 import org.homework.persistence.repository.JourneyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,8 +13,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-@Service("transactionJourneyService")
-//public class TransactionalJourneyService {
+@Service(value = "transactionJourneyService")
 public class TransactionalJourneyService implements JourneyService {
 
     @Autowired
@@ -22,16 +21,44 @@ public class TransactionalJourneyService implements JourneyService {
 
     @Override
     @Transactional
-    public Collection<JourneyEntity> find(String stationFrom, String stationTo, LocalDate dateFrom, LocalDate dateTo) {
-        Collection<JourneyEntity> journeys = journeyRepository.getJourneys(stationFrom, stationTo);
+    public List find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {
+        if (stationFrom == null) throw new IllegalArgumentException("station from must be set");
+        if (stationTo == null) throw new IllegalArgumentException("station to must be set");
+        if (dateFrom == null) throw new IllegalArgumentException("date from must be set");
+        if (dateTo == null) throw new IllegalArgumentException("date to must be set");
+
+        List journeys = journeyRepository.getJourneys(stationFrom, stationTo);
         if (journeys.isEmpty()) return Collections.emptyList();
 
-        Collection<JourneyEntity> journeyEntities = checkJourneys(journeys, dateFrom, dateTo);
-        return journeyEntities;
+        return checkJourneys(journeys, dateFrom, dateTo);
     }
 
-    private Collection<JourneyEntity> checkJourneys(Collection<JourneyEntity> journeys, LocalDate dateFrom, LocalDate dateTo) {
-        List<JourneyEntity> list = new ArrayList<>();
+    @Override
+    @Transactional
+    public Long createJourney(final JourneyEntity entity) {
+        if (entity == null) throw new IllegalArgumentException("entity must be set");
+
+        if (!checkFillEntity(entity)) {
+            return journeyRepository.create(entity);
+        } else {
+            return 0L;
+        }
+    }
+
+    private boolean checkFillEntity(final JourneyEntity entity) {
+        return (StringUtils.isEmpty(entity.getStationFrom())
+                || StringUtils.isEmpty(entity.getStationTo())
+                || StringUtils.isEmpty(entity.getRoute())
+                || entity.getDeparture() == null
+                || entity.getArrival() == null);
+    }
+
+    private List checkJourneys(final Collection<JourneyEntity> journeys, final LocalDate dateFrom, final LocalDate dateTo) {
+        if (journeys == null) throw new IllegalArgumentException("Collection journeys must be set");
+        if (dateFrom == null) throw new IllegalArgumentException("dateFrom must be set");
+        if (dateTo == null) throw new IllegalArgumentException("dateTo must be set");
+
+        final List list = new ArrayList<>();
 
         for (JourneyEntity entity : journeys) {
             if (entity.getArrival().equals(dateTo) && entity.getDeparture().equals(dateFrom)) {
@@ -39,19 +66,6 @@ public class TransactionalJourneyService implements JourneyService {
             }
         }
         if (list.isEmpty()) return Collections.emptyList();
-        return list;
+        return Collections.unmodifiableList(list);
     }
-
-    // TODO почему транзакции лучше ставить на наших сервисных сущностях чем в сущностях которые являются репозиторием
-    @Transactional
-    public Long createJourney(final JourneyEntity entity) {
-        if (entity == null) throw new IllegalArgumentException("entity must be set");
-
-        return journeyRepository.create(entity);
-    }
-
-//    @Transactional
-//    public Collection<JourneyEntity> findJourney(String stationFrom, String stationTo) {
-//        return journeyRepository.getJourneys(route);
-//    }
 }

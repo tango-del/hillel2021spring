@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
-import java.sql.SQLException;
 import java.util.Properties;
 
 @Configuration
@@ -29,39 +28,46 @@ public class DatabaseConfig {
     private Environment environment;
 
     @Bean
-    public DataSource dataSource() throws SQLException {
-        HikariConfig config = new HikariConfig();
+    public DataSource dataSource() {
+        final HikariConfig config = new HikariConfig();
         config.setPassword(environment.getProperty("database.password"));
         config.setUsername(environment.getProperty("database.username"));
         config.setJdbcUrl(environment.getProperty("database.url"));
         config.addDataSourceProperty("databaseName" , environment.getProperty("database.name"));
         config.setDataSourceClassName(PGSimpleDataSource.class.getName());
-        config.setMaximumPoolSize(150);
-        HikariDataSource dataSource = new HikariDataSource(config);
+        final HikariDataSource dataSource = new HikariDataSource(config);
 
         return dataSource;
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean emf(DataSource dataSource) {
-        LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
+    public LocalContainerEntityManagerFactoryBean emf(final DataSource dataSource) {
+        if (dataSource == null) throw new IllegalArgumentException("dataSource must be set");
+
+        final LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(dataSource);
         emf.setPackagesToScan("org.homework.persistence.entity");
         emf.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 
-        Properties properties = new Properties();
+        final Properties properties = new Properties();
         properties.put("hibernate.dialect", PostgreSQL10Dialect.class.getName());
 //        properties.put("hibernate.hbm2ddl.auto", "create");
         properties.put("hibernate.hbm2ddl.auto", "update");
         properties.put("hibernate.show_sql", "true");
+        //properties.put("hibernate.connection.pool_size", 150);
+        properties.put("hibernate.c3p0.min_size", 30); // Minimum number of JDBC connections in the pool
+        properties.put("hibernate.c3p0.max_size", 150); // Maximum number of JDBC connections in the pool
+        properties.put("javax.persistence.query.timeout", 300000); // Max query timeout in milliseconds
 
         emf.setJpaProperties(properties);
         return emf;
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) throws SQLException {
-        JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
+    public PlatformTransactionManager transactionManager(final EntityManagerFactory entityManagerFactory) {
+        if (entityManagerFactory == null) throw new IllegalArgumentException("entityManagerFactory must be set");
+
+        final JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
         jpaTransactionManager.setEntityManagerFactory(entityManagerFactory);
         jpaTransactionManager.setDataSource(dataSource());
         return jpaTransactionManager;

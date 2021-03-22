@@ -1,12 +1,14 @@
 package org.homework.service;
 
-import org.homework.Journey;
+import org.homework.persistence.entity.JourneyEntity;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Collection;
 
 public interface JourneyService {
 
-    <T> Collection<T> find(String stationFrom, String stationTo, LocalDate dateFrom, LocalDate dateTo);
+    Collection<JourneyEntity> find(String stationFrom, String stationTo, LocalDate dateFrom, LocalDate dateTo);
 
+    Long createJourney(JourneyEntity entity);
 }
