@@ -1,6 +1,7 @@
 package org.homework.service;
 
 import org.homework.Journey;
+import org.homework.persistence.entity.JourneyEntity;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
@@ -20,6 +21,11 @@ public class StubJourneyServiceImpl implements JourneyService {
     public Collection<Journey> find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {
 
         return Collections.emptyList();
+    }
+
+    @Override
+    public Long createJourney(JourneyEntity entity) {
+        return null;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package org.homework.service;
 
 import org.homework.Journey;
+import org.homework.persistence.entity.JourneyEntity;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -78,6 +79,11 @@ public class InMemoryJourneyServiceImpl implements JourneyService {
            туда ничего не нужно добавлять
         */
         return Collections.unmodifiableList(out);
+    }
+
+    @Override
+    public Long createJourney(JourneyEntity entity) {
+        return null;
     }
 
     @Override

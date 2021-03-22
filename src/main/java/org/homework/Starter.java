@@ -24,6 +24,7 @@ public class Starter {
         final ApplicationContext applicationContext = new AnnotationConfigApplicationContext(RootConfig.class);
 
         TicketClient ticketClient = applicationContext.getBean(TicketClient.class);
+//        System.out.println(ticketClient.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
 
         JourneyEntity journeyEntity = new JourneyEntity();
         journeyEntity.setStationFrom("Kiev");

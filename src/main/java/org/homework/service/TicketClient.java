@@ -37,7 +37,8 @@ public class TicketClient {
     private Map<String, JourneyService> journeyServices;
 
     @Autowired
-    private TransactionalJourneyService transactionalJourneyService;
+    @Qualifier("transactionalJourneyService")
+    private JourneyService transactionalJourneyService;
 
     /*
     system.message -> ищет property с таким названием
@@ -60,6 +61,7 @@ public class TicketClient {
     }
 
     public Long createJourney(final JourneyEntity journeyEntity) {
+//        return journeyServices.get("transactionalJourneyService").createJourney(journeyEntity);
         return transactionalJourneyService.createJourney(journeyEntity);
     }
 

@@ -2,6 +2,7 @@ package org.homework.service;
 
 import org.homework.Journey;
 import org.homework.dbjourneyservice.Connection;
+import org.homework.persistence.entity.JourneyEntity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -54,6 +55,11 @@ public class DatabaseJourneyServiceImpl implements JourneyService {
 
         return Collections.unmodifiableList(journeys);
 
+    }
+
+    @Override
+    public Long createJourney(JourneyEntity entity) {
+        return null;
     }
 
     private ResultSet getRawsWithRoute(final String stationFrom, final String stationTo) throws SQLException {
