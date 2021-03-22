@@ -61,10 +61,10 @@ public class TicketClient {
         //return transactionalJourneyService.createJourney(journeyEntity);
     }
 
-    public Collection<JourneyEntity> test(String route) {
-        return ((TransactionalJourneyService)journeyServices.get("transactionJourneyService")).test(route);
-//        return transactionalJourneyService.test(route);
-    }
+//    public Collection<JourneyEntity> test(String route) {
+//        return ((TransactionalJourneyService)journeyServices.get("transactionJourneyService")).test(route);
+////        return transactionalJourneyService.test(route);
+//    }
 
     public Collection<Journey> find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {
         if (stationFrom == null) throw new IllegalArgumentException("station from must be set");

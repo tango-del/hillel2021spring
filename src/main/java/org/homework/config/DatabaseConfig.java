@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.Properties;
 
 @Configuration
@@ -28,14 +29,19 @@ public class DatabaseConfig {
     private Environment environment;
 
     @Bean
-    public DataSource dataSource() {
+    public DataSource dataSource() throws SQLException {
         HikariConfig config = new HikariConfig();
         config.setPassword(environment.getProperty("database.password"));
         config.setUsername(environment.getProperty("database.username"));
         config.setJdbcUrl(environment.getProperty("database.url"));
         config.addDataSourceProperty("databaseName" , environment.getProperty("database.name"));
         config.setDataSourceClassName(PGSimpleDataSource.class.getName());
+        config.setMaximumPoolSize(150);
         HikariDataSource dataSource = new HikariDataSource(config);
+
+        for (int i = 0; i < 30; i++) {
+            dataSource.getConnection();
+        }
 
         return dataSource;
     }
@@ -49,7 +55,7 @@ public class DatabaseConfig {
 
         Properties properties = new Properties();
         properties.put("hibernate.dialect", PostgreSQL10Dialect.class.getName());
-//        properties.put("hibernate.hbm2ddl.auto", "create-drop");
+//        properties.put("hibernate.hbm2ddl.auto", "create");
         properties.put("hibernate.hbm2ddl.auto", "update");
         properties.put("hibernate.show_sql", "true");
 
@@ -58,7 +64,7 @@ public class DatabaseConfig {
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) throws SQLException {
         JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
         jpaTransactionManager.setEntityManagerFactory(entityManagerFactory);
         jpaTransactionManager.setDataSource(dataSource());

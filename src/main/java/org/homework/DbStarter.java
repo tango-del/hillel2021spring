@@ -26,14 +26,9 @@ public class DbStarter {
 
         //TicketClient ticketClient = applicationContext.getBean(TicketClient.class);
 
-        JourneyEntity journeyEntity = new JourneyEntity();
-        journeyEntity.setStationFrom("Odessa");
-        journeyEntity.setStationTo("Kiev");
-        journeyEntity.setDeparture(LocalDate.now());
-        journeyEntity.setArrival(LocalDate.now().plusDays(1));
-        journeyEntity.setRoute("Odessa->Kiev");
 
-        journeyService.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1));
+        Collection<JourneyEntity> journeys = journeyService.find("Lviv", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1));
+        journeys.forEach(System.out::println);
 
 //        final Collection<JourneyEntity> test = journeyService.find("Odessa->Kiev");
 //        test.forEach(System.out::println);
