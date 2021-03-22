@@ -10,12 +10,12 @@ create table database_journey_service.journey
 	route varchar(200) not null
 );
 
-INSERT INTO database_journey_service.journey (station_from, station_to, departure, arrival, route) VALUES ('Odessa', 'Kiev', '2021-03-16', '2021-03-17', 'Odessa->Kiev');
-INSERT INTO database_journey_service.journey (station_from, station_to, departure, arrival, route) VALUES ('Odessa', 'Kiev', '2021-03-17', '2021-03-18', 'Odessa->Kiev');
-INSERT INTO database_journey_service.journey (station_from, station_to, departure, arrival, route) VALUES ('Odessa', 'Kiev', '2021-03-18', '2021-03-19', 'Odessa->Kiev');
-INSERT INTO database_journey_service.journey (station_from, station_to, departure, arrival, route) VALUES ('Kiev', 'Odessa', '2021-03-16', '2021-03-17', 'Kiev->Odessa');
-INSERT INTO database_journey_service.journey (station_from, station_to, departure, arrival, route) VALUES ('Kiev', 'Odessa', '2021-03-17', '2021-03-18', 'Kiev->Odessa');
-INSERT INTO database_journey_service.journey (station_from, station_to, departure, arrival, route) VALUES ('Kiev', 'Odessa', '2021-03-18', '2021-03-19', 'Kiev->Odessa');
-INSERT INTO database_journey_service.journey (station_from, station_to, departure, arrival, route) VALUES ('Lviv', 'Kiev', '2021-03-16', '2021-03-17', 'Lviv->Kiev');
-INSERT INTO database_journey_service.journey (station_from, station_to, departure, arrival, route) VALUES ('Lviv', 'Kiev', '2021-03-17', '2021-03-18', 'Lviv->Kiev');
-INSERT INTO database_journey_service.journey (station_from, station_to, departure, arrival, route) VALUES ('Lviv', 'Kiev', '2021-03-18', '2021-03-19', 'Lviv->Kiev');
+INSERT INTO database_journey_service.journey (station_from, station_to, departure, arrival, route) VALUES ('Odessa', 'Kiev', '2021-03-22', '2021-03-23', 'Odessa->Kiev');
+INSERT INTO database_journey_service.journey (station_from, station_to, departure, arrival, route) VALUES ('Odessa', 'Kiev', '2021-03-23', '2021-03-24', 'Odessa->Kiev');
+INSERT INTO database_journey_service.journey (station_from, station_to, departure, arrival, route) VALUES ('Odessa', 'Kiev', '2021-03-24', '2021-03-25', 'Odessa->Kiev');
+INSERT INTO database_journey_service.journey (station_from, station_to, departure, arrival, route) VALUES ('Kiev', 'Odessa', '2021-03-22', '2021-03-23', 'Kiev->Odessa');
+INSERT INTO database_journey_service.journey (station_from, station_to, departure, arrival, route) VALUES ('Kiev', 'Odessa', '2021-03-23', '2021-03-24', 'Kiev->Odessa');
+INSERT INTO database_journey_service.journey (station_from, station_to, departure, arrival, route) VALUES ('Kiev', 'Odessa', '2021-03-24', '2021-03-25', 'Kiev->Odessa');
+INSERT INTO database_journey_service.journey (station_from, station_to, departure, arrival, route) VALUES ('Lviv', 'Kiev', '2021-03-22', '2021-03-23', 'Lviv->Kiev');
+INSERT INTO database_journey_service.journey (station_from, station_to, departure, arrival, route) VALUES ('Lviv', 'Kiev', '2021-03-23', '2021-03-24', 'Lviv->Kiev');
+INSERT INTO database_journey_service.journey (station_from, station_to, departure, arrival, route) VALUES ('Lviv', 'Kiev', '2021-03-24', '2021-03-25', 'Lviv->Kiev');
