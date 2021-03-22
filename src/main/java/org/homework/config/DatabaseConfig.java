@@ -39,10 +39,6 @@ public class DatabaseConfig {
         config.setMaximumPoolSize(150);
         HikariDataSource dataSource = new HikariDataSource(config);
 
-        for (int i = 0; i < 30; i++) {
-            dataSource.getConnection();
-        }
-
         return dataSource;
     }
 
