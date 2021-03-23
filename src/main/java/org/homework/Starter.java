@@ -14,6 +14,7 @@ import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Date;
 
 public class Starter {
     public static void main(String[] args) {
@@ -28,7 +29,11 @@ public class Starter {
 
         JourneyEntity journeyEntity = new JourneyEntity();
         journeyEntity.setStationFrom("Kiev");
+        journeyEntity.setStationTo("Odessa");
+        journeyEntity.setDateFrom(new Date());
+        journeyEntity.setDateTo(new Date(System.currentTimeMillis() + 1000000L));
         System.out.println("create journey with id = " + ticketClient.createJourney(journeyEntity));
+        System.out.println(journeyEntity);
         ((AnnotationConfigApplicationContext) applicationContext).close();
     }
 
