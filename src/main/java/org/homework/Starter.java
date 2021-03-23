@@ -3,6 +3,7 @@ package org.homework;
 import org.homework.config.RootConfig;
 import org.homework.context.AppContext;
 import org.homework.persistence.entity.JourneyEntity;
+import org.homework.persistence.entity.enums.DirectionType;
 import org.homework.service.JourneyService;
 import org.homework.service.TicketClient;
 import org.springframework.beans.factory.BeanFactory;
@@ -13,6 +14,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -30,8 +32,9 @@ public class Starter {
         JourneyEntity journeyEntity = new JourneyEntity();
         journeyEntity.setStationFrom("Kiev");
         journeyEntity.setStationTo("Odessa");
-        journeyEntity.setDateFrom(new Date());
-        journeyEntity.setDateTo(new Date(System.currentTimeMillis() + 1000000L));
+        journeyEntity.setDateFrom(Instant.now());
+        journeyEntity.setDateTo(Instant.now().plusMillis(10_000_000L));
+        journeyEntity.setDirection(DirectionType.UNKNOWN);
         System.out.println("create journey with id = " + ticketClient.createJourney(journeyEntity));
         System.out.println(journeyEntity);
         ((AnnotationConfigApplicationContext) applicationContext).close();
