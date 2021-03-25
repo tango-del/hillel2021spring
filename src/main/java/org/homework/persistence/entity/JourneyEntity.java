@@ -13,11 +13,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @NoArgsConstructor
-public class JourneyEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class JourneyEntity extends AbstractModifyEntity<Long> {
 
     @Column(name = "station_from", nullable = false, columnDefinition = "varchar(1050) default 'NOT_SPECIFIED'")
     private String stationFrom;
@@ -45,15 +41,4 @@ public class JourneyEntity {
     @Column(name = "direction", length = 20)
     @Enumerated(EnumType.STRING)
     private DirectionType direction = DirectionType.TO;
-
-    @Override
-    public String toString() {
-        return "JourneyEntity{" +
-                "id=" + id +
-                ", stationFrom='" + stationFrom + '\'' +
-                ", stationTo='" + stationTo + '\'' +
-                ", dateFrom=" + dateFrom +
-                ", dateTo=" + dateTo +
-                '}';
-    }
 }
