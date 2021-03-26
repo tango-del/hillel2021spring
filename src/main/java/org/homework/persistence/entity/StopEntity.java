@@ -19,6 +19,9 @@ public class StopEntity extends AbstractModifyEntity<Long> {
     @OneToOne(mappedBy = "stop", cascade = CascadeType.PERSIST)
     private StopAdditionalInfoEntity additionalInfo;
 
+    @Transient
+    private boolean applyToJourneyBuild;
+
     public void addStopAdditionalInfo(final StopAdditionalInfoEntity stopAdditionalInfo) {
         if (stopAdditionalInfo == null) {
             this.additionalInfo = null;

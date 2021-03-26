@@ -51,6 +51,7 @@ public class Starter {
         StopEntity stopEntity = new StopEntity();
         stopEntity.addStopAdditionalInfo(stopAdditionalInfoEntity);
         stopEntity.setCommonInfo(commonInfo);
+        stopEntity.setApplyToJourneyBuild(stopEntity.isActive());
 
         System.out.println("create stop with id = " + ticketClient.createStop(stopEntity));
 
