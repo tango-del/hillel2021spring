@@ -35,6 +35,7 @@ public class Starter {
         journeyEntity.setDateFrom(Instant.now());
         journeyEntity.setDateTo(Instant.now().plusMillis(10_000_000L));
         journeyEntity.setDirection(DirectionType.UNKNOWN);
+        journeyEntity.setActive(false);
         System.out.println("create journey with id = " + ticketClient.createJourney(journeyEntity));
         ((AnnotationConfigApplicationContext) applicationContext).close();
     }
