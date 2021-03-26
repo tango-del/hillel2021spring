@@ -12,6 +12,11 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 public class StopAdditionalInfoEntity {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
     // координаты
     @Column(name = "longitude", nullable = false)
     private double longitude;
