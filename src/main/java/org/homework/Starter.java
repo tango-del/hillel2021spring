@@ -16,7 +16,6 @@ import org.springframework.core.io.ClassPathResource;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Starter {
     public static void main(String[] args) {

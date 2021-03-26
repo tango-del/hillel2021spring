@@ -24,11 +24,10 @@ public abstract class AbstractModifyEntity<ID> {
 
     @Column(name = "active")
     //@Type(type = "true_false")
+    //@Type(type = "yes_no")
 //    @Type(type = "numeric_boolean")
 //    @Type(type = "boolean")
 //    @Type(type = "true_false")
-//    private boolean active = true;
     @Convert(converter = YesNoConverter.class)
-    //@Type(type = "yes_no")
     private boolean active = true;
 }
