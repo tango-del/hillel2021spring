@@ -2,6 +2,7 @@ package org.homework.service;
 
 import org.homework.Journey;
 import org.homework.persistence.entity.JourneyEntity;
+import org.homework.persistence.entity.StopEntity;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,12 +58,22 @@ public class TicketClient {
         this.journeyService = journeyService;
     }*/
 
+    @Autowired
+    private TransactionalStopService stopService;
+
     public TicketClient() {
     }
 
     public Long createJourney(final JourneyEntity journeyEntity) {
+        if (journeyEntity == null) throw new IllegalArgumentException("journeyEntity must be set");
+
 //        return journeyServices.get("transactionalJourneyService").createJourney(journeyEntity);
         return transactionalJourneyService.createJourney(journeyEntity);
+    }
+
+    public Long createStop(final StopEntity stopEntity) {
+        if (stopEntity == null) throw new IllegalArgumentException("stopEntity must be set");
+        return stopService.createStop(stopEntity);
     }
 
     public Collection<Journey> find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {
