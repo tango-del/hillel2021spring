@@ -16,4 +16,6 @@ public class StopEntity extends AbstractModifyEntity<Long> {
     @Embedded
     private CommonInfo commonInfo;
 
+    @OneToOne(mappedBy = "stop")
+    private StopAdditionalInfoEntity additionalInfo;
 }
