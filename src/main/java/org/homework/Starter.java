@@ -22,10 +22,10 @@ import java.time.LocalDate;
 
 public class Starter {
     public static void main(String[] args) {
-        createJourneyEntityAndSaveToDatabaseWithHibernate();
+        createEntitiesJourneyStopWithAddInfo();
     }
 
-    private static void createJourneyEntityAndSaveToDatabaseWithHibernate() {
+    private static void createEntitiesJourneyStopWithAddInfo() {
         final ApplicationContext applicationContext = new AnnotationConfigApplicationContext(RootConfig.class);
 
         TicketClient ticketClient = applicationContext.getBean(TicketClient.class);
@@ -55,6 +55,24 @@ public class Starter {
 
         System.out.println("create stop with id = " + ticketClient.createStop(stopEntity));
 
+
+        ((AnnotationConfigApplicationContext) applicationContext).close();
+    }
+
+    private static void createJourneyEntityAndSaveToDatabaseWithHibernate() {
+        final ApplicationContext applicationContext = new AnnotationConfigApplicationContext(RootConfig.class);
+
+        TicketClient ticketClient = applicationContext.getBean(TicketClient.class);
+//        System.out.println(ticketClient.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
+
+        JourneyEntity journeyEntity = new JourneyEntity();
+        journeyEntity.setStationFrom("Kiev");
+        journeyEntity.setStationTo("Odessa");
+        journeyEntity.setDateFrom(Instant.now());
+        journeyEntity.setDateTo(Instant.now().plusMillis(10_000_000L));
+        journeyEntity.setDirection(DirectionType.UNKNOWN);
+        journeyEntity.setActive(false);
+        System.out.println("create journey with id = " + ticketClient.createJourney(journeyEntity));
 
         ((AnnotationConfigApplicationContext) applicationContext).close();
     }
