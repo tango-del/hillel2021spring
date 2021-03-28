@@ -22,6 +22,7 @@ public class DbStarter {
         System.out.println(journeyService.find("Lviv", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
 
 //        TicketClient ticketClient = applicationContext.getBean(TicketClient.class);
-//        System.out.println(ticketClient.find("Lviv1", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
+//        System.out.println(ticketClient.find("Lviv", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
+        ((AnnotationConfigApplicationContext)applicationContext).close();
     }
 }

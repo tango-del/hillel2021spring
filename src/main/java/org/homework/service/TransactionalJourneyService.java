@@ -21,13 +21,13 @@ public class TransactionalJourneyService implements JourneyService {
 
     @Override
     @Transactional
-    public List find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {
+    public List<JourneyEntity> find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {
         if (stationFrom == null) throw new IllegalArgumentException("station from must be set");
         if (stationTo == null) throw new IllegalArgumentException("station to must be set");
         if (dateFrom == null) throw new IllegalArgumentException("date from must be set");
         if (dateTo == null) throw new IllegalArgumentException("date to must be set");
 
-        List journeys = journeyRepository.getJourneys(stationFrom, stationTo);
+        List<JourneyEntity> journeys = journeyRepository.getJourneys(stationFrom, stationTo);
         if (journeys.isEmpty()) return Collections.emptyList();
 
         return checkJourneys(journeys, dateFrom, dateTo);
@@ -53,12 +53,12 @@ public class TransactionalJourneyService implements JourneyService {
                 || entity.getArrival() == null);
     }
 
-    private List checkJourneys(final Collection<JourneyEntity> journeys, final LocalDate dateFrom, final LocalDate dateTo) {
+    private List<JourneyEntity> checkJourneys(final Collection<JourneyEntity> journeys, final LocalDate dateFrom, final LocalDate dateTo) {
         if (journeys == null) throw new IllegalArgumentException("Collection journeys must be set");
         if (dateFrom == null) throw new IllegalArgumentException("dateFrom must be set");
         if (dateTo == null) throw new IllegalArgumentException("dateTo must be set");
 
-        final List list = new ArrayList<>();
+        final List<JourneyEntity> list = new ArrayList<>();
 
         for (JourneyEntity entity : journeys) {
             if (entity.getArrival().equals(dateTo) && entity.getDeparture().equals(dateFrom)) {

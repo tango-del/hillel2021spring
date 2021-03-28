@@ -26,7 +26,7 @@ public class TicketClient {
         }
     }
 
-    public Collection find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {
+    public Collection<JourneyEntity> find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {
         if (stationFrom == null) throw new IllegalArgumentException("station from must be set");
         if (stationTo == null) throw new IllegalArgumentException("station to must be set");
         if (dateFrom == null) throw new IllegalArgumentException("date from must be set");
@@ -34,7 +34,7 @@ public class TicketClient {
 
         for (JourneyService service : journeyServices.values()) {
 
-            final Collection journeys = service.find(stationFrom, stationTo, dateFrom, dateTo);
+            final Collection<JourneyEntity> journeys = service.find(stationFrom, stationTo, dateFrom, dateTo);
 
             if (!journeys.isEmpty()) return Collections.unmodifiableCollection(journeys);
         }
