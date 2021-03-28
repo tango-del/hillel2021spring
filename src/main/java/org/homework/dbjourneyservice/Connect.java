@@ -33,6 +33,12 @@ public class Connect implements org.homework.dbjourneyservice.Connection {
 
     @Override
     public void closeConnection() throws SQLException {
-        connection.close();
+        if (connection == null) return;
+
+        try {
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 }
