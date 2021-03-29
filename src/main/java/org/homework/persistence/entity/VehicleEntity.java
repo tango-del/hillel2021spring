@@ -4,9 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "vehicle")
@@ -15,6 +15,12 @@ import javax.persistence.Table;
 @NoArgsConstructor
 public class VehicleEntity extends AbstractModifyEntity<Long> {
 
-    @Embedded
-    private CommonInfo commonInfo;
+    @Column(name = "name")
+    private String name;
+
+    @OneToMany(mappedBy = "vehicle")
+    private List<JourneyEntity> journeys = new ArrayList<>();
+
+    //@Embedded
+    //private CommonInfo commonInfo;
 }

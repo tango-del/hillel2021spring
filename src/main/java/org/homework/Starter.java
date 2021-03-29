@@ -2,10 +2,7 @@ package org.homework;
 
 import org.homework.config.RootConfig;
 import org.homework.context.AppContext;
-import org.homework.persistence.entity.CommonInfo;
-import org.homework.persistence.entity.JourneyEntity;
-import org.homework.persistence.entity.StopAdditionalInfoEntity;
-import org.homework.persistence.entity.StopEntity;
+import org.homework.persistence.entity.*;
 import org.homework.persistence.entity.enums.DirectionType;
 import org.homework.service.JourneyService;
 import org.homework.service.TicketClient;
@@ -29,7 +26,6 @@ public class Starter {
         final ApplicationContext applicationContext = new AnnotationConfigApplicationContext(RootConfig.class);
 
         TicketClient ticketClient = applicationContext.getBean(TicketClient.class);
-//        System.out.println(ticketClient.find("Odessa", "Kiev", LocalDate.now(), LocalDate.now().plusDays(1)));
 
         JourneyEntity journeyEntity = new JourneyEntity();
         journeyEntity.setStationFrom("Kiev");
@@ -38,19 +34,25 @@ public class Starter {
         journeyEntity.setDateTo(Instant.now().plusMillis(10_000_000L));
         journeyEntity.setDirection(DirectionType.UNKNOWN);
         journeyEntity.setActive(false);
+
+        final VehicleEntity vehicleEntity = new VehicleEntity();
+        vehicleEntity.setName("bus1");
+
+        journeyEntity.addVehicle(vehicleEntity);
+
         System.out.println("create journey with id = " + ticketClient.createJourney(journeyEntity));
 
         StopAdditionalInfoEntity stopAdditionalInfoEntity = new StopAdditionalInfoEntity();
         stopAdditionalInfoEntity.setLatitude(10D);
         stopAdditionalInfoEntity.setLongitude(176D);
 
-        CommonInfo commonInfo = new CommonInfo();
-        commonInfo.setName("stop 1");
-        commonInfo.setDescription("stop 1 description");
+        CommonInfo commonInfoForStop = new CommonInfo();
+        commonInfoForStop.setName("stop 1");
+        commonInfoForStop.setDescription("stop 1 description");
 
         StopEntity stopEntity = new StopEntity();
         stopEntity.addStopAdditionalInfo(stopAdditionalInfoEntity);
-        stopEntity.setCommonInfo(commonInfo);
+        stopEntity.setCommonInfo(commonInfoForStop);
         stopEntity.setApplyToJourneyBuild(stopEntity.isActive());
 
         System.out.println("create stop with id = " + ticketClient.createStop(stopEntity));

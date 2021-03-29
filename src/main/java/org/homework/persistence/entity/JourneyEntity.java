@@ -41,4 +41,14 @@ public class JourneyEntity extends AbstractModifyEntity<Long> {
     @Column(name = "direction", length = 20)
     @Enumerated(EnumType.STRING)
     private DirectionType direction = DirectionType.TO;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @JoinColumn(name = "vehicle_id")
+    private VehicleEntity vehicle;
+
+    public void addVehicle(final VehicleEntity vehicle) {
+        if (vehicle == null) throw new IllegalArgumentException("vehicle must be set");
+
+        this.vehicle = vehicle;
+    }
 }
