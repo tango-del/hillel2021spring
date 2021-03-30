@@ -34,4 +34,12 @@ public class VehicleEntity extends AbstractModifyEntity<Long> {
 
     //@Embedded
     //private CommonInfo commonInfo;
+
+
+    @Override
+    public String toString() {
+        return "VehicleEntity{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

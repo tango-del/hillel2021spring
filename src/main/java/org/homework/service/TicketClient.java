@@ -71,10 +71,10 @@ public class TicketClient {
         return stopService.createStop(stopEntity);
     }
 
-    public Optional<JourneyEntity> getJourneyById(final Long id) {
+    public Optional<JourneyEntity> getJourneyById(final Long id, boolean withDependencies) {
         //Assert.notNull(id, "id must be set");
         if (id == null) return Optional.empty();
-        return transactionalJourneyService.getById(id);
+        return transactionalJourneyService.getById(id, withDependencies);
     }
 
     public Collection<Journey> find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {

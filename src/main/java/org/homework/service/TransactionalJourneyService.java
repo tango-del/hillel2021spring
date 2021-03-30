@@ -27,9 +27,16 @@ public class TransactionalJourneyService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<JourneyEntity> getById(final Long id) {
+    public Optional<JourneyEntity> getById(final Long id, boolean withDependencies) {
         if (id == null) throw new IllegalArgumentException("id must be set");
 
-        return journeyRepository.frindById(id);
+        final Optional<JourneyEntity> byId = journeyRepository.frindById(id);
+        if (withDependencies && byId.isPresent()) {
+            final JourneyEntity journeyEntity = byId.get();
+            System.out.println(journeyEntity.getVehicle().getName());
+
+        }
+        return byId;
     }
 }
+
