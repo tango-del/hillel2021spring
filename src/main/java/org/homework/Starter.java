@@ -42,20 +42,20 @@ public class Starter {
 
         System.out.println("create journey with id = " + ticketClient.createJourney(journeyEntity));
 
-//        StopAdditionalInfoEntity stopAdditionalInfoEntity = new StopAdditionalInfoEntity();
-//        stopAdditionalInfoEntity.setLatitude(10D);
-//        stopAdditionalInfoEntity.setLongitude(176D);
-//
-//        CommonInfo commonInfoForStop = new CommonInfo();
-//        commonInfoForStop.setName("stop 1");
-//        commonInfoForStop.setDescription("stop 1 description");
-//
-//        StopEntity stopEntity = new StopEntity();
-//        stopEntity.addStopAdditionalInfo(stopAdditionalInfoEntity);
-//        stopEntity.setCommonInfo(commonInfoForStop);
-//        stopEntity.setApplyToJourneyBuild(stopEntity.isActive());
-//
-//        System.out.println("create stop with id = " + ticketClient.createStop(stopEntity));
+        StopAdditionalInfoEntity stopAdditionalInfoEntity = new StopAdditionalInfoEntity();
+        stopAdditionalInfoEntity.setLatitude(10D);
+        stopAdditionalInfoEntity.setLongitude(176D);
+
+        CommonInfo commonInfoForStop = new CommonInfo();
+        commonInfoForStop.setName("stop 1");
+        commonInfoForStop.setDescription("stop 1 description");
+
+        StopEntity stopEntity = new StopEntity();
+        stopEntity.addStopAdditionalInfo(stopAdditionalInfoEntity);
+        stopEntity.setCommonInfo(commonInfoForStop);
+        stopEntity.setApplyToJourneyBuild(stopEntity.isActive());
+
+        System.out.println("create stop with id = " + ticketClient.createStop(stopEntity));
 
         System.out.println(ticketClient.getJourneyById(journeyEntity.getId(), true));
 

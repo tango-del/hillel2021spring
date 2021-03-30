@@ -7,6 +7,8 @@ import org.homework.persistence.entity.enums.DirectionType;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -66,6 +68,13 @@ public class JourneyEntity extends AbstractModifyEntity<Long> {
 
         this.vehicle = vehicle;
     }
+
+    @ManyToMany
+    @JoinTable(name = "journey_stop",
+            joinColumns = @JoinColumn(name = "journey_id"),
+            inverseJoinColumns = @JoinColumn(name = "stop_id")
+    )
+    private List<StopEntity> stops = new ArrayList<>();
 
     @Override
     public String toString() {
