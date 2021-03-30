@@ -22,12 +22,12 @@ public abstract class AbstractModifyEntity<ID> {
     @CreationTimestamp
     private Instant createDate;
 
-    @Column(name = "active")
     //@Type(type = "true_false")
     //@Type(type = "yes_no")
 //    @Type(type = "numeric_boolean")
 //    @Type(type = "boolean")
 //    @Type(type = "true_false")
+    @Column(name = "active")
     @Convert(converter = YesNoConverter.class)
     private boolean active = true;
 }

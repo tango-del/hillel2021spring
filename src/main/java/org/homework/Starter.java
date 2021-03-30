@@ -42,6 +42,8 @@ public class Starter {
 
         System.out.println("create journey with id = " + ticketClient.createJourney(journeyEntity));
 
+        System.out.println(ticketClient.getJourneyById(1L));
+
         StopAdditionalInfoEntity stopAdditionalInfoEntity = new StopAdditionalInfoEntity();
         stopAdditionalInfoEntity.setLatitude(10D);
         stopAdditionalInfoEntity.setLongitude(176D);

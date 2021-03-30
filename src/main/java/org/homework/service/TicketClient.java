@@ -11,35 +11,32 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 // клиентский сервис который будет дёргать JourneyService
 @Component
-//@Lazy
 public class TicketClient {
 //public class TicketClient implements DisposableBean { // -> без использования PreDestroy @Override destroy()
 //public class TicketClient implements InitializingBean { // -> без использования @PostConstruct @Override afterPropertiesSet()
 
     //private JourneyService journeyService; // не будем оперировать какой-то конкретно реализацией, а интерфейсом
 
-    /*@Autowired
-    private List<JourneyService> journeyServices;*/
+    @Autowired
+    private List<JourneyService> journeyServices;
 
     //@Autowired(required = false)
-    @Autowired
-    private Map<String, JourneyService> journeyServices;
+    //@Autowired
+    //private Map<String, JourneyService> journeyServices;
 
     @Autowired
     @Qualifier("transactionalJourneyService")
-    private JourneyService transactionalJourneyService;
+    private TransactionalJourneyService transactionalJourneyService;
 
     /*
     system.message -> ищет property с таким названием
@@ -61,8 +58,6 @@ public class TicketClient {
     @Autowired
     private TransactionalStopService stopService;
 
-    public TicketClient() {
-    }
 
     public Long createJourney(final JourneyEntity journeyEntity) {
         if (journeyEntity == null) throw new IllegalArgumentException("journeyEntity must be set");
@@ -76,6 +71,12 @@ public class TicketClient {
         return stopService.createStop(stopEntity);
     }
 
+    public Optional<JourneyEntity> getJourneyById(final Long id) {
+        //Assert.notNull(id, "id must be set");
+        if (id == null) return Optional.empty();
+        return transactionalJourneyService.getById(id);
+    }
+
     public Collection<Journey> find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {
         if (stationFrom == null) throw new IllegalArgumentException("station from must be set");
         if (stationTo == null) throw new IllegalArgumentException("station to must be set");
@@ -85,26 +86,25 @@ public class TicketClient {
         // -> private JourneyService journeyService;
 //        return journeyService.find(stationFrom, stationTo, dateFrom, dateTo);
 
-        /*// -> private List<JourneyService> journeyServices;
+        // -> private List<JourneyService> journeyServices;
         for (JourneyService service : journeyServices) {
             System.out.println(service);
 
             final Collection<Journey> journeys = service.find(stationFrom, stationTo, dateFrom, dateTo);
 
             if (!CollectionUtils.isEmpty(journeys)) return journeys;
-        }*/
-
-        // -> private Map<String, JourneyService> journeyServices;
-        Collection<Journey> service = journeyServices
-                .get("inMemoryJourneyService").find(stationFrom, stationTo, dateFrom, dateTo);
-
-        if (service == null) {
-            return Collections.emptyList();
         }
 
-        return service;
+        // -> private Map<String, JourneyService> journeyServices;
+        //Collection<Journey> service = journeyServices.get("inMemoryJourneyService").find(stationFrom, stationTo, dateFrom, dateTo);
 
-//        return Collections.emptyList();
+//        if (service == null) {
+//            return Collections.emptyList();
+//        }
+//
+//        return service;
+
+        return Collections.emptyList();
     }
 
     public static void main(String[] args) {

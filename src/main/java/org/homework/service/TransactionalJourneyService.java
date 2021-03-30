@@ -9,25 +9,27 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Optional;
 
 @Service(value = "transactionalJourneyService")
-//public class TransactionalJourneyService {
-public class TransactionalJourneyService implements JourneyService {
+public class TransactionalJourneyService {
+//public class TransactionalJourneyService implements JourneyService {
 
     @Autowired
     private JourneyRepository journeyRepository;
 
-    @Override
-    public Collection<Journey> find(String stationFrom, String stationTo, LocalDate dateFrom, LocalDate dateTo) {
-        return null;
-    }
-
     // TODO почему транзакции лучше ставить на наших сервисных сущностях чем в сущностях которые являются репозиторием
-    @Override
     @Transactional
     public Long createJourney(final JourneyEntity entity) {
         if (entity == null) throw new IllegalArgumentException("entity must be set");
 
         return journeyRepository.create(entity);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<JourneyEntity> getById(final Long id) {
+        if (id == null) throw new IllegalArgumentException("id must be set");
+
+        return journeyRepository.frindById(id);
     }
 }
