@@ -7,6 +7,7 @@ import org.homework.persistence.entity.enums.DirectionType;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.Objects;
 
 @Entity
 @Table(name = "journey")
@@ -14,6 +15,20 @@ import java.time.Instant;
 @Setter
 @NoArgsConstructor
 public class JourneyEntity extends AbstractModifyEntity<Long> {
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof JourneyEntity)) return false;
+        JourneyEntity entity = (JourneyEntity) o;
+        return getId() != null && Objects.equals(getId(), entity.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+        //return Objects.hash(stationFrom, stationTo, dateFrom, dateTo, direction, vehicle);
+    }
 
     @Column(name = "station_from", nullable = false, columnDefinition = "varchar(1050) default 'NOT_SPECIFIED'")
     private String stationFrom;
@@ -50,5 +65,17 @@ public class JourneyEntity extends AbstractModifyEntity<Long> {
         if (vehicle == null) throw new IllegalArgumentException("vehicle must be set");
 
         this.vehicle = vehicle;
+    }
+
+    @Override
+    public String toString() {
+        return "JourneyEntity{" +
+                "stationFrom='" + stationFrom + '\'' +
+                ", stationTo='" + stationTo + '\'' +
+                ", dateFrom=" + dateFrom +
+                ", dateTo=" + dateTo +
+                ", direction=" + direction +
+                //", vehicle=" + vehicle +
+                '}';
     }
 }
