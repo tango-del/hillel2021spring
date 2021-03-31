@@ -16,6 +16,7 @@ import org.springframework.core.io.ClassPathResource;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Optional;
 
 public class Starter {
     public static void main(String[] args) {
@@ -40,7 +41,7 @@ public class Starter {
 
         journeyEntity.addVehicle(vehicleEntity);
 
-        System.out.println("create journey with id = " + ticketClient.createJourney(journeyEntity));
+
 
         StopAdditionalInfoEntity stopAdditionalInfoEntity = new StopAdditionalInfoEntity();
         stopAdditionalInfoEntity.setLatitude(10D);
@@ -55,10 +56,23 @@ public class Starter {
         stopEntity.setCommonInfo(commonInfoForStop);
         stopEntity.setApplyToJourneyBuild(stopEntity.isActive());
 
-        System.out.println("create stop with id = " + ticketClient.createStop(stopEntity));
+        journeyEntity.addStop(stopEntity);
 
-        System.out.println(ticketClient.getJourneyById(journeyEntity.getId(), true));
+        //System.out.println("create stop with id = " + ticketClient.createStop(stopEntity));
 
+        System.out.println("create journey with id = " + ticketClient.createJourney(journeyEntity));
+
+        final Optional<JourneyEntity> journeyById = ticketClient.getJourneyById(journeyEntity.getId(), true);
+
+        final JourneyEntity journey = journeyById.get();
+        System.out.println("get all stop by journey " + journey.getStops());
+        System.out.println(journeyById);
+
+        journey.setDirection(DirectionType.TO);
+
+        System.out.println("update journey");
+
+        ticketClient.saveJourney(journey);
 
         ((AnnotationConfigApplicationContext) applicationContext).close();
     }

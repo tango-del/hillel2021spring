@@ -1,14 +1,11 @@
 package org.homework.service;
 
-import org.homework.Journey;
 import org.homework.persistence.entity.JourneyEntity;
 import org.homework.persistence.repository.JourneyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.util.Collection;
 import java.util.Optional;
 
 @Service(value = "transactionalJourneyService")
@@ -30,13 +27,23 @@ public class TransactionalJourneyService {
     public Optional<JourneyEntity> getById(final Long id, boolean withDependencies) {
         if (id == null) throw new IllegalArgumentException("id must be set");
 
-        final Optional<JourneyEntity> byId = journeyRepository.frindById(id);
+        final Optional<JourneyEntity> byId = journeyRepository.findById(id);
         if (withDependencies && byId.isPresent()) {
             final JourneyEntity journeyEntity = byId.get();
-            System.out.println(journeyEntity.getVehicle().getName());
-
+            journeyEntity.getVehicle().getName();
+            journeyEntity.getStops().size();
         }
         return byId;
     }
-}
 
+    @Transactional
+    public void save(final JourneyEntity journey) {
+        if (journey == null) throw new IllegalArgumentException("journey must be set");
+
+//        final JourneyEntity save = journeyRepository.findById(journey.getId()).get();
+//        save.setDirection(journey.getDirection());
+
+        final JourneyEntity save = journeyRepository.save(journey);
+        save.setStationFrom("test station from");
+    }
+}

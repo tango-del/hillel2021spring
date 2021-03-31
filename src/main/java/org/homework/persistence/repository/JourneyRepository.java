@@ -1,5 +1,6 @@
 package org.homework.persistence.repository;
 
+import org.hibernate.Session;
 import org.homework.persistence.entity.JourneyEntity;
 import org.springframework.stereotype.Repository;
 
@@ -20,9 +21,23 @@ public class JourneyRepository {
         return journeyEntity.getId();
     }
 
-    public Optional<JourneyEntity> frindById(final Long id) {
+    public Optional<JourneyEntity> findById(final Long id) {
         if (id == null) throw new IllegalArgumentException("id must be set");
 
-        return Optional.ofNullable(entityManager.find(JourneyEntity.class, id));
+        Session session = entityManager.unwrap(Session.class);
+        //final JourneyEntity entity = session.byMultipleIds(JourneyEntity.class).multiLoad(id).get(0);
+
+        final JourneyEntity value = session.find(JourneyEntity.class, id);
+
+        //final JourneyEntity value = entityManager.find(JourneyEntity.class, id);
+        return Optional.ofNullable(value);
+    }
+
+    public JourneyEntity save(JourneyEntity journey) {
+        if (journey == null) throw new IllegalArgumentException("journey must be set");
+
+        final JourneyEntity merge = entityManager.merge(journey);
+        //entityManager.flush();
+        return merge;
     }
 }

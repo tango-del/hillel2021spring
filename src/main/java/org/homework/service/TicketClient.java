@@ -77,6 +77,11 @@ public class TicketClient {
         return transactionalJourneyService.getById(id, withDependencies);
     }
 
+    public void saveJourney(final JourneyEntity journey) {
+        if (journey == null) throw new IllegalArgumentException("entity must be set");
+        transactionalJourneyService.save(journey);
+    }
+
     public Collection<Journey> find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {
         if (stationFrom == null) throw new IllegalArgumentException("station from must be set");
         if (stationTo == null) throw new IllegalArgumentException("station to must be set");
@@ -136,4 +141,6 @@ public class TicketClient {
     public void destroy() throws Exception {
 //        System.out.println("destroy bean in method destroy() class TicketClient");
     }
+
+
 }
