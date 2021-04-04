@@ -14,12 +14,12 @@ create table journey
 
 alter table journey owner to postgres;
 
-INSERT INTO journey (station_from, station_to, departure, arrival, route) VALUES ('Odessa', 'Kiev', '2021-04-02', '2021-04-03', 'Odessa->Kiev');
-INSERT INTO journey (station_from, station_to, departure, arrival, route) VALUES ('Odessa', 'Kiev', '2021-04-03', '2021-04-04', 'Odessa->Kiev');
-INSERT INTO journey (station_from, station_to, departure, arrival, route) VALUES ('Odessa', 'Kiev', '2021-04-04', '2021-04-05', 'Odessa->Kiev');
-INSERT INTO journey (station_from, station_to, departure, arrival, route) VALUES ('Kiev', 'Odessa', '2021-04-02', '2021-04-03', 'Kiev->Odessa');
-INSERT INTO journey (station_from, station_to, departure, arrival, route) VALUES ('Kiev', 'Odessa', '2021-04-03', '2021-04-04', 'Kiev->Odessa');
-INSERT INTO journey (station_from, station_to, departure, arrival, route) VALUES ('Kiev', 'Odessa', '2021-04-04', '2021-04-05', 'Kiev->Odessa');
-INSERT INTO journey (station_from, station_to, departure, arrival, route) VALUES ('Lviv', 'Kiev', '2021-04-02', '2021-04-03', 'Lviv->Kiev');
-INSERT INTO journey (station_from, station_to, departure, arrival, route) VALUES ('Lviv', 'Kiev', '2021-04-03', '2021-04-04', 'Lviv->Kiev');
-INSERT INTO journey (station_from, station_to, departure, arrival, route) VALUES ('Lviv', 'Kiev', '2021-04-04', '2021-04-05', 'Lviv->Kiev');
+INSERT INTO journey (station_from, station_to, departure, arrival, route) VALUES ('Odessa', 'Kiev', '2021-04-05', '2021-04-06', 'Odessa->Kiev');
+INSERT INTO journey (station_from, station_to, departure, arrival, route) VALUES ('Odessa', 'Kiev', '2021-04-06', '2021-04-07', 'Odessa->Kiev');
+INSERT INTO journey (station_from, station_to, departure, arrival, route) VALUES ('Odessa', 'Kiev', '2021-04-07', '2021-04-08', 'Odessa->Kiev');
+INSERT INTO journey (station_from, station_to, departure, arrival, route) VALUES ('Kiev', 'Odessa', '2021-04-05', '2021-04-06', 'Kiev->Odessa');
+INSERT INTO journey (station_from, station_to, departure, arrival, route) VALUES ('Kiev', 'Odessa', '2021-04-06', '2021-04-07', 'Kiev->Odessa');
+INSERT INTO journey (station_from, station_to, departure, arrival, route) VALUES ('Kiev', 'Odessa', '2021-04-07', '2021-04-08', 'Kiev->Odessa');
+INSERT INTO journey (station_from, station_to, departure, arrival, route) VALUES ('Lviv', 'Kiev', '2021-04-05', '2021-04-06', 'Lviv->Kiev');
+INSERT INTO journey (station_from, station_to, departure, arrival, route) VALUES ('Lviv', 'Kiev', '2021-04-06', '2021-04-07', 'Lviv->Kiev');
+INSERT INTO journey (station_from, station_to, departure, arrival, route) VALUES ('Lviv', 'Kiev', '2021-04-07', '2021-04-08', 'Lviv->Kiev');

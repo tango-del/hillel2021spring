@@ -37,6 +37,7 @@ public class DatabaseConfig {
         config.setDataSourceClassName(PGSimpleDataSource.class.getName());
         config.setMaximumPoolSize(150); // Max connections in pool
         config.setMinimumIdle(30); // Min connections in pool
+        config.setIdleTimeout(300_000L); // Max time connection is allowed in the pool
         final HikariDataSource dataSource = new HikariDataSource(config);
 
         return dataSource;
@@ -56,7 +57,6 @@ public class DatabaseConfig {
 //        properties.put("hibernate.hbm2ddl.auto", "create");
         properties.put("hibernate.hbm2ddl.auto", "update");
         properties.put("hibernate.show_sql", "true");
-        properties.put("javax.persistence.query.timeout", 300_000); // Max query timeout in milliseconds
 
         emf.setJpaProperties(properties);
         return emf;
