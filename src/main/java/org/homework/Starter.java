@@ -27,8 +27,9 @@ public class Starter {
 
         JourneyEntity journey1 = buildJourney("Odessa", "Kiev", Instant.now(), Instant.now().plusSeconds(10_000L));
         journey1.addStop(buildStop(10D, 176D));
-
         journey1 = ticketClient.createOrUpdateJourney(journey1);
+        journey1.addStop(buildStop(20D, 360D));
+        ticketClient.createOrUpdateJourney(journey1);
     }
 
     private static JourneyEntity buildJourney(final String from, final String to, final Instant dateFrom, final Instant dateTo) {
