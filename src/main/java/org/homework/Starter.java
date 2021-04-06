@@ -26,6 +26,7 @@ public class Starter {
         TicketClient ticketClient = applicationContext.getBean(TicketClient.class);
 
         JourneyEntity journey1 = buildJourney("Odessa", "Kiev", Instant.now(), Instant.now().plusSeconds(10_000L));
+        journey1.addStop(buildStop(10D, 176D));
 
         journey1 = ticketClient.createOrUpdateJourney(journey1);
     }
@@ -60,7 +61,7 @@ public class Starter {
         return stopEntity;
     }
 
-    private static final VehicleEntity buildVehicle(final String name) {
+    private static VehicleEntity buildVehicle(final String name) {
         if (StringUtils.isEmpty(name)) throw new IllegalArgumentException("name must be set");
 
         VehicleEntity vehicleEntity = new VehicleEntity();

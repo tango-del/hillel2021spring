@@ -15,8 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 public class StopEntity extends AbstractModifyEntity<Long> {
 
-    @Embedded
-    private CommonInfo commonInfo;
+    //@Embedded
+    //private CommonInfo commonInfo;
 
     @OneToOne(mappedBy = "stop", cascade = CascadeType.PERSIST)
     private StopAdditionalInfoEntity additionalInfo;
