@@ -7,15 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Repository
-public class StopRepository {
+public class StopRepository extends CommonRepository<StopEntity, Long> {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
-    public Long create(final StopEntity stopEntity) {
-        if (stopEntity == null) throw new IllegalArgumentException("stopEntity must be set");
-
-        entityManager.persist(stopEntity);
-        return stopEntity.getId();
+    protected StopRepository() {
+        super(StopEntity.class);
     }
 }

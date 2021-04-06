@@ -13,9 +13,9 @@ public class TransactionalStopService {
     private StopRepository stopRepository;
 
     @Transactional
-    public Long createStop(final StopEntity entity) {
+    public StopEntity createOrUpdateStop(final StopEntity entity) {
         if (entity == null) throw new IllegalArgumentException("entity must be set");
 
-        return stopRepository.create(entity);
+        return stopRepository.createOrUpdate(entity);
     }
 }

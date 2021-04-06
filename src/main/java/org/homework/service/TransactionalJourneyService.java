@@ -17,14 +17,14 @@ public class TransactionalJourneyService {
 
     // TODO почему транзакции лучше ставить на наших сервисных сущностях чем в сущностях которые являются репозиторием
     @Transactional
-    public Long createJourney(final JourneyEntity entity) {
+    public JourneyEntity createOrUpdateJourney(final JourneyEntity entity) {
         if (entity == null) throw new IllegalArgumentException("entity must be set");
 
-        return journeyRepository.create(entity);
+        return journeyRepository.createOrUpdate(entity);
     }
 
     @Transactional(readOnly = true)
-    public Optional<JourneyEntity> getById(final Long id, boolean withDependencies) {
+    public Optional<JourneyEntity> findById(final Long id, boolean withDependencies) {
         if (id == null) throw new IllegalArgumentException("id must be set");
 
         final Optional<JourneyEntity> byId = journeyRepository.findById(id);
@@ -34,16 +34,5 @@ public class TransactionalJourneyService {
             journeyEntity.getStops().size();
         }
         return byId;
-    }
-
-    @Transactional
-    public void save(final JourneyEntity journey) {
-        if (journey == null) throw new IllegalArgumentException("journey must be set");
-
-//        final JourneyEntity save = journeyRepository.findById(journey.getId()).get();
-//        save.setDirection(journey.getDirection());
-
-        final JourneyEntity save = journeyRepository.save(journey);
-        save.setStationFrom("test station from");
     }
 }
