@@ -9,7 +9,8 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Optional;
 
-public abstract class CommonRepository<E extends AbstractModifyEntity<ID>, ID extends Serializable> implements GenericRepository<E, ID> {
+public abstract class CommonRepository<E extends AbstractModifyEntity<ID>, ID extends Serializable>
+        implements GenericRepository<E, ID> {
 
     private final Class<E> entityClass;
 
