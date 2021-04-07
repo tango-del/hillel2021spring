@@ -3,6 +3,7 @@ package org.homework.service;
 import org.homework.Journey;
 import org.homework.persistence.entity.JourneyEntity;
 import org.homework.persistence.entity.StopEntity;
+import org.homework.persistence.entity.VehicleEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +29,9 @@ public class TicketClient {
     @Autowired
     private TransactionalStopService stopService;
 
+    @Autowired
+    private TransactionalVehicleService vehicleService;
+
     @Value("${system.message:default value}")
     private String systemMessage;
 
@@ -48,6 +52,12 @@ public class TicketClient {
     public JourneyEntity createOrUpdateJourney(final JourneyEntity journey) {
         if (journey == null) throw new IllegalArgumentException("entity must be set");
         return transactionalJourneyService.createOrUpdateJourney(journey);
+    }
+
+    public VehicleEntity createOrUpdateVehicle(final VehicleEntity vehicle) {
+        if (vehicle == null) throw new IllegalArgumentException("vehicle must be set");
+
+        return vehicleService.createOrUpdate(vehicle);
     }
 
     public Collection<Journey> find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {
