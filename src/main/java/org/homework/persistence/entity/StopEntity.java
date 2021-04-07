@@ -3,6 +3,7 @@ package org.homework.persistence.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,12 +14,13 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@DynamicUpdate
 public class StopEntity extends AbstractModifyEntity<Long> {
 
     //@Embedded
     //private CommonInfo commonInfo;
 
-    @OneToOne(mappedBy = "stop", cascade = CascadeType.PERSIST)
+    @OneToOne(mappedBy = "stop", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private StopAdditionalInfoEntity additionalInfo;
 
     @ManyToMany(mappedBy = "stops")

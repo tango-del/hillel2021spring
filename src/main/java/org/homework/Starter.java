@@ -25,11 +25,25 @@ public class Starter {
         final ApplicationContext applicationContext = new AnnotationConfigApplicationContext(RootConfig.class);
         TicketClient ticketClient = applicationContext.getBean(TicketClient.class);
 
+        VehicleEntity vehicle1 = buildVehicle("bus1");
+        vehicle1 = ticketClient.createOrUpdateVehicle(vehicle1);
+
         JourneyEntity journey1 = buildJourney("Odessa", "Kiev", Instant.now(), Instant.now().plusSeconds(10_000L));
-        journey1.addStop(buildStop(10D, 176D));
-        journey1 = ticketClient.createOrUpdateJourney(journey1);
-        journey1.addStop(buildStop(20D, 360D));
+        vehicle1.setName("bus 2");
+        journey1.addVehicle(vehicle1);
+
         ticketClient.createOrUpdateJourney(journey1);
+
+        /*journey1.addStop(buildStop(10D, 176D));
+
+        System.out.println("call create journey");
+        journey1 = ticketClient.createOrUpdateJourney(journey1);
+
+        journey1.getStops().get(0).setActive(false);
+        journey1.addStop(buildStop(20D, 360D));
+
+        System.out.println("call update journey");
+        ticketClient.createOrUpdateJourney(journey1);*/
     }
 
     private static JourneyEntity buildJourney(final String from, final String to, final Instant dateFrom, final Instant dateTo) {

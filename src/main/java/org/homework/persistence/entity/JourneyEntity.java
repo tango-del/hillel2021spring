@@ -3,6 +3,7 @@ package org.homework.persistence.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.homework.persistence.entity.enums.DirectionType;
 
@@ -18,6 +19,7 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @DynamicUpdate
+@DynamicInsert
 public class JourneyEntity extends AbstractModifyEntity<Long> {
 
     @Override
@@ -61,7 +63,7 @@ public class JourneyEntity extends AbstractModifyEntity<Long> {
     @Enumerated(EnumType.STRING)
     private DirectionType direction = DirectionType.TO;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "vehicle_id")
     private VehicleEntity vehicle;
 
@@ -71,7 +73,7 @@ public class JourneyEntity extends AbstractModifyEntity<Long> {
         this.vehicle = vehicle;
     }
 
-    @ManyToMany(cascade = {CascadeType.PERSIST})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "journey_stop", indexes = @Index(name = "journey_stop_idx", columnList = "journey_id, stop_id"),
             joinColumns = @JoinColumn(name = "journey_id"),
             inverseJoinColumns = @JoinColumn(name = "stop_id")
