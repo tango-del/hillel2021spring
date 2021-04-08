@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service(value = "transactionalJourneyService")
@@ -20,6 +21,15 @@ public class TransactionalJourneyService {
     public JourneyEntity createOrUpdateJourney(final JourneyEntity entity) {
         if (entity == null) throw new IllegalArgumentException("entity must be set");
 
+        System.out.println("create journey");
+        final JourneyEntity orUpdate = journeyRepository.createOrUpdate(entity);
+        System.out.println("get journey by id");
+        JourneyEntity journey = journeyRepository.findById(orUpdate.getId()).get();
+        System.out.println("remove journey by id");
+        //journeyRepository.removeById(journey.getId());
+
+        //boolean isNew = Objects.isNull(entity.getId());
+        //if (!isNew)
         return journeyRepository.createOrUpdate(entity);
     }
 
@@ -34,5 +44,19 @@ public class TransactionalJourneyService {
             journeyEntity.getStops().size();
         }
         return byId;
+    }
+
+    @Transactional
+    public void remove(JourneyEntity journey) {
+        if (journey == null) throw new IllegalArgumentException("journey must be set");
+
+        journeyRepository.remove(journey);
+    }
+
+    @Transactional
+    public void removeById(Long journeyId) {
+        if (journeyId == 0) return;
+
+        journeyRepository.removeById(journeyId);
     }
 }

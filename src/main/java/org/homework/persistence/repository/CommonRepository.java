@@ -15,9 +15,11 @@ public abstract class CommonRepository<E extends AbstractModifyEntity<ID>, ID ex
     private final Class<E> entityClass;
 
     @PersistenceContext
-    private EntityManager entityManager;
+    protected EntityManager entityManager;
 
     protected CommonRepository(Class<E> entityClass) {
+        if (Objects.isNull(entityClass)) throw new IllegalArgumentException("entityClass must be set");
+
         this.entityClass = entityClass;
     }
 
@@ -40,11 +42,13 @@ public abstract class CommonRepository<E extends AbstractModifyEntity<ID>, ID ex
 
     @Override
     public void removeById(ID id) {
-        throw new UnsupportedOperationException("not implement");
+        entityManager.remove(findById(id).get());
     }
 
     @Override
     public void remove(E entity) {
-        throw new UnsupportedOperationException("not implement");
+        if (entity == null) throw new IllegalArgumentException("entity must best");
+
+        entityManager.remove(entity);
     }
 }

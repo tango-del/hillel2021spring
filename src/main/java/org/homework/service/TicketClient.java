@@ -60,6 +60,18 @@ public class TicketClient {
         return vehicleService.createOrUpdate(vehicle);
     }
 
+    public void remove(final JourneyEntity journey) {
+        if (journey == null) throw new IllegalArgumentException("journey must be set");
+
+        transactionalJourneyService.remove(journey);
+    }
+
+    public void removeById(final Long journeyId) {
+        if (journeyId == 0) return;
+
+        transactionalJourneyService.removeById(journeyId);
+    }
+
     public Collection<Journey> find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {
         if (stationFrom == null) throw new IllegalArgumentException("station from must be set");
         if (stationTo == null) throw new IllegalArgumentException("station to must be set");

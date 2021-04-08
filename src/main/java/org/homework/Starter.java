@@ -1,23 +1,14 @@
 package org.homework;
 
 import org.homework.config.RootConfig;
-import org.homework.context.AppContext;
 import org.homework.persistence.entity.*;
 import org.homework.persistence.entity.enums.DirectionType;
-import org.homework.service.JourneyService;
 import org.homework.service.TicketClient;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.StringUtils;
 
-import java.io.IOException;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.util.Optional;
 
 public class Starter {
     public static void main(String[] args) {
@@ -33,6 +24,10 @@ public class Starter {
         journey1.addVehicle(vehicle1);
 
         ticketClient.createOrUpdateJourney(journey1);
+
+        System.out.println("delete journey");
+        ticketClient.removeById(journey1.getId());
+//        ticketClient.remove(journey1);
 
         /*journey1.addStop(buildStop(10D, 176D));
 
