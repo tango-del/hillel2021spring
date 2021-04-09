@@ -68,7 +68,7 @@ public class JourneyEntity extends AbstractModifyEntity<Long> {
     private VehicleEntity vehicle;
 
     public void addVehicle(final VehicleEntity vehicle) {
-        if (vehicle == null) throw new IllegalArgumentException("vehicle must be set");
+        if (Objects.isNull(vehicle)) throw new IllegalArgumentException("vehicle must be set");
 
         this.vehicle = vehicle;
     }
@@ -81,7 +81,7 @@ public class JourneyEntity extends AbstractModifyEntity<Long> {
     private List<StopEntity> stops = new ArrayList<>();
 
     public void addStop(final StopEntity stop) {
-        if (stop == null) return;
+        if (Objects.isNull(stop)) return;
         if (stops == null) stops = new ArrayList<>();
         stops.add(stop);
         stop.addJourney(this);

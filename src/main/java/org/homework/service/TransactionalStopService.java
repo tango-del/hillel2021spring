@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
+
 @Service
 public class TransactionalStopService {
 
@@ -14,7 +16,7 @@ public class TransactionalStopService {
 
     @Transactional
     public StopEntity createOrUpdateStop(final StopEntity entity) {
-        if (entity == null) throw new IllegalArgumentException("entity must be set");
+        if (Objects.isNull(entity)) throw new IllegalArgumentException("entity must be set");
 
         return stopRepository.createOrUpdate(entity);
     }

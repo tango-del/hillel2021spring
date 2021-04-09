@@ -19,7 +19,7 @@ public class TransactionalJourneyService {
     // TODO почему транзакции лучше ставить на наших сервисных сущностях чем в сущностях которые являются репозиторием
     @Transactional
     public JourneyEntity createOrUpdateJourney(final JourneyEntity entity) {
-        if (entity == null) throw new IllegalArgumentException("entity must be set");
+        if (Objects.isNull(entity)) throw new IllegalArgumentException("entity must be set");
 
         System.out.println("create journey");
         final JourneyEntity orUpdate = journeyRepository.createOrUpdate(entity);
@@ -35,7 +35,7 @@ public class TransactionalJourneyService {
 
     @Transactional(readOnly = true)
     public Optional<JourneyEntity> findById(final Long id, boolean withDependencies) {
-        if (id == null) throw new IllegalArgumentException("id must be set");
+        if (Objects.isNull(id)) throw new IllegalArgumentException("id must be set");
 
         final Optional<JourneyEntity> byId = journeyRepository.findById(id);
         if (withDependencies && byId.isPresent()) {
@@ -48,7 +48,7 @@ public class TransactionalJourneyService {
 
     @Transactional
     public void remove(JourneyEntity journey) {
-        if (journey == null) throw new IllegalArgumentException("journey must be set");
+        if (Objects.isNull(journey)) throw new IllegalArgumentException("journey must be set");
 
         journeyRepository.remove(journey);
     }

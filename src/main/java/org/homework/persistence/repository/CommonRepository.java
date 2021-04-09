@@ -42,13 +42,19 @@ public abstract class CommonRepository<E extends AbstractModifyEntity<ID>, ID ex
 
     @Override
     public void removeById(ID id) {
-        entityManager.remove(findById(id).get());
+        //entityManager.remove(findById(id).get());
+        final E reference = entityManager.getReference(entityClass, id);
+        entityManager.remove(reference);
     }
 
     @Override
     public void remove(E entity) {
-        if (entity == null) throw new IllegalArgumentException("entity must best");
+        if (Objects.isNull(entity)) throw new IllegalArgumentException("entity must best");
 
-        entityManager.remove(entity);
+        if (entityManager.contains(entity)) {
+            entityManager.remove(entity);
+        } else {
+            removeById(entity.getId());
+        }
     }
 }

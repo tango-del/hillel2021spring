@@ -39,29 +39,29 @@ public class TicketClient {
     private Environment environment;
 
     public StopEntity createOrUpdateStop(final StopEntity stopEntity) {
-        if (stopEntity == null) throw new IllegalArgumentException("stopEntity must be set");
+        if (Objects.isNull(stopEntity)) throw new IllegalArgumentException("stopEntity must be set");
         return stopService.createOrUpdateStop(stopEntity);
     }
 
     public Optional<JourneyEntity> getJourneyById(final Long id, boolean withDependencies) {
         //Assert.notNull(id, "id must be set");
-        if (id == null) return Optional.empty();
+        if (Objects.isNull(id)) return Optional.empty();
         return transactionalJourneyService.findById(id, withDependencies);
     }
 
     public JourneyEntity createOrUpdateJourney(final JourneyEntity journey) {
-        if (journey == null) throw new IllegalArgumentException("entity must be set");
+        if (Objects.isNull(journey)) throw new IllegalArgumentException("entity must be set");
         return transactionalJourneyService.createOrUpdateJourney(journey);
     }
 
     public VehicleEntity createOrUpdateVehicle(final VehicleEntity vehicle) {
-        if (vehicle == null) throw new IllegalArgumentException("vehicle must be set");
+        if (Objects.isNull(vehicle)) throw new IllegalArgumentException("vehicle must be set");
 
         return vehicleService.createOrUpdate(vehicle);
     }
 
     public void remove(final JourneyEntity journey) {
-        if (journey == null) throw new IllegalArgumentException("journey must be set");
+        if (Objects.isNull(journey)) throw new IllegalArgumentException("journey must be set");
 
         transactionalJourneyService.remove(journey);
     }
@@ -70,6 +70,12 @@ public class TicketClient {
         if (journeyId == 0) return;
 
         transactionalJourneyService.removeById(journeyId);
+    }
+
+    public void removeVehicle(final VehicleEntity vehicleEntity) {
+        if (Objects.isNull(vehicleEntity)) throw new IllegalArgumentException("vehicleEntity must be set");
+
+        vehicleService.remove(vehicleEntity);
     }
 
     public Collection<Journey> find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {

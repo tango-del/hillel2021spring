@@ -11,4 +11,13 @@ public class VehicleRepository extends CommonRepository<VehicleEntity, Long> {
     protected VehicleRepository() {
         super(VehicleEntity.class);
     }
+
+    @Override
+    public void remove(VehicleEntity entity) {
+        if (Objects.isNull(entity)) throw new IllegalArgumentException("entity must be set");
+
+        entity = findById(entity.getId()).get();
+        entity.removeAllJourney();
+        super.remove(entity);
+    }
 }

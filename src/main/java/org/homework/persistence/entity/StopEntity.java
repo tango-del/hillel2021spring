@@ -8,6 +8,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "stop")
@@ -30,7 +31,7 @@ public class StopEntity extends AbstractModifyEntity<Long> {
     private boolean applyToJourneyBuild;
 
     public void addStopAdditionalInfo(final StopAdditionalInfoEntity stopAdditionalInfo) {
-        if (stopAdditionalInfo == null) {
+        if (Objects.isNull(stopAdditionalInfo)) {
             this.additionalInfo = null;
             return;
         }
@@ -39,7 +40,7 @@ public class StopEntity extends AbstractModifyEntity<Long> {
     }
 
     public void addJourney(JourneyEntity journeyEntity) {
-        if (journeyEntity == null) return;
+        if (Objects.isNull(journeyEntity)) return;
         if (journeys == null) journeys = new ArrayList<>();
         journeys.add(journeyEntity);
     }
