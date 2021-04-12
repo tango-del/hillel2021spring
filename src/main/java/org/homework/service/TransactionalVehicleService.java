@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class TransactionalVehicleService {
@@ -26,5 +29,20 @@ public class TransactionalVehicleService {
         if (Objects.isNull(vehicle)) throw new IllegalArgumentException("vehicle must be set");
 
         vehicleRepository.remove(vehicle);
+    }
+
+    @Transactional
+    public Collection<VehicleEntity> findByIds(Long... ids) {
+        if (ids.length == 0) return Collections.emptyList();
+        return vehicleRepository.findByIds(ids);
+    }
+
+    public Optional<VehicleEntity> findById(Long id, boolean withDependencies) {
+        if (id.equals(0L)) return Optional.empty();
+        final Optional<VehicleEntity> byId = vehicleRepository.findById(id);
+        if (!byId.isPresent()) return byId;
+        if (!withDependencies) return byId;
+        byId.get().getJourneys().size();
+        return byId;
     }
 }

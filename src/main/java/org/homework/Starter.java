@@ -25,8 +25,10 @@ public class Starter {
 
         ticketClient.createOrUpdateJourney(journey1);
 
-        System.out.println("delete vehicle");
-        ticketClient.removeVehicle(vehicle1);
+        //System.out.println("delete vehicle");
+        //ticketClient.removeVehicle(vehicle1);
+
+        System.out.println(ticketClient.findVehicleById(1L, false));
 
         //System.out.println("delete journey");
         //ticketClient.removeById(journey1.getId());

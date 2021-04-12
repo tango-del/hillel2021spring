@@ -1,6 +1,5 @@
 package org.homework.service;
 
-import org.homework.Journey;
 import org.homework.persistence.entity.JourneyEntity;
 import org.homework.persistence.entity.StopEntity;
 import org.homework.persistence.entity.VehicleEntity;
@@ -9,18 +8,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import java.time.LocalDate;
 import java.util.*;
 
 @Component
 public class TicketClient {
 
-    @Autowired
-    private List<JourneyService> journeyServices;
+    /*@Autowired
+    private List<JourneyService> journeyServices;*/
 
     @Autowired
     @Qualifier("transactionalJourneyService")
@@ -78,7 +73,19 @@ public class TicketClient {
         vehicleService.remove(vehicleEntity);
     }
 
-    public Collection<Journey> find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {
+    public Collection<VehicleEntity> findVehicleByIds(Long... ids) {
+        if (ids.length == 0) return Collections.emptyList();
+
+        return vehicleService.findByIds(ids);
+    }
+
+    public Optional<VehicleEntity> findVehicleById(Long id, boolean withDependencies) {
+        if (id == 0L) return Optional.empty();
+
+        return vehicleService.findById(id, withDependencies);
+    }
+
+/*    public Collection<Journey> find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {
         if (stationFrom == null) throw new IllegalArgumentException("station from must be set");
         if (stationTo == null) throw new IllegalArgumentException("station to must be set");
         if (dateFrom == null) throw new IllegalArgumentException("date from must be set");
@@ -111,5 +118,5 @@ public class TicketClient {
     @PreDestroy
     public void destroy() throws Exception {
 //        System.out.println("destroy bean in method destroy() class TicketClient");
-    }
+    }*/
 }
