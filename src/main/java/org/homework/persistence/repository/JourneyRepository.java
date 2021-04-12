@@ -4,8 +4,8 @@ import org.homework.persistence.entity.JourneyEntity;
 import org.homework.persistence.entity.VehicleEntity;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
 import java.util.Objects;
-import java.util.Optional;
 
 @Repository
 public class JourneyRepository extends CommonRepository<JourneyEntity, Long> {
@@ -26,6 +26,10 @@ public class JourneyRepository extends CommonRepository<JourneyEntity, Long> {
             }
         }
         return super.createOrUpdate(entity);
+    }
+
+    public EntityManager getEntityManager() {
+        return entityManager;
     }
 
 /*    @Override

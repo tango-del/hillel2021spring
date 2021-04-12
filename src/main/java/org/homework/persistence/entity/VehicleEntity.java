@@ -18,7 +18,7 @@ public class VehicleEntity extends AbstractModifyEntity<Long> {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "vehicle")
+    @OneToMany(mappedBy = "vehicle", cascade = {CascadeType.REMOVE})
     private Set<JourneyEntity> journeys = new HashSet<>();
 
     public void addJourney(final JourneyEntity journeyEntity) {
@@ -30,10 +30,10 @@ public class VehicleEntity extends AbstractModifyEntity<Long> {
         journeyEntity.addVehicle(this);
     }
 
-    public void removeAllJourney() {
+/*    public void removeAllJourney() {
         if (CollectionUtils.isEmpty(journeys)) return;
         journeys.forEach(item -> item.setVehicle(null));
-    }
+    }*/
 
     //@Embedded
     //private CommonInfo commonInfo;

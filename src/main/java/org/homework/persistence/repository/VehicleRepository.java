@@ -17,7 +17,7 @@ public class VehicleRepository extends CommonRepository<VehicleEntity, Long> {
         if (Objects.isNull(entity)) throw new IllegalArgumentException("entity must be set");
 
         entity = findById(entity.getId()).get();
-        entity.removeAllJourney();
+        //entity.removeAllJourney();
         super.remove(entity);
     }
 }
