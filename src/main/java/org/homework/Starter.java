@@ -28,7 +28,6 @@ public class Starter {
         System.out.println("delete vehicle");
         ticketClient.removeVehicle(vehicle1);
 
-
         //System.out.println("delete journey");
         //ticketClient.removeById(journey1.getId());
 //        ticketClient.remove(journey1);
