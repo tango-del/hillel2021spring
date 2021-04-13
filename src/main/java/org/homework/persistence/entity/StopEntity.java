@@ -18,8 +18,8 @@ import java.util.Objects;
 @DynamicUpdate
 public class StopEntity extends AbstractModifyEntity<Long> {
 
-    //@Embedded
-    //private CommonInfo commonInfo;
+    @Embedded
+    private CommonInfo commonInfo;
 
     @OneToOne(mappedBy = "stop", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private StopAdditionalInfoEntity additionalInfo;

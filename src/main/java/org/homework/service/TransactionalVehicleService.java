@@ -31,12 +31,13 @@ public class TransactionalVehicleService {
         vehicleRepository.remove(vehicle);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Collection<VehicleEntity> findByIds(Long... ids) {
         if (ids.length == 0) return Collections.emptyList();
         return vehicleRepository.findByIds(ids);
     }
 
+    @Transactional(readOnly = true)
     public Optional<VehicleEntity> findById(Long id, boolean withDependencies) {
         if (id.equals(0L)) return Optional.empty();
         final Optional<VehicleEntity> byId = vehicleRepository.findById(id);
@@ -44,5 +45,10 @@ public class TransactionalVehicleService {
         if (!withDependencies) return byId;
         byId.get().getJourneys().size();
         return byId;
+    }
+
+    @Transactional(readOnly = true)
+    public Collection<VehicleEntity> findAll() {
+        return vehicleRepository.findAll();
     }
 }

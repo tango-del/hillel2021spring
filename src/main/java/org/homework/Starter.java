@@ -16,19 +16,26 @@ public class Starter {
         final ApplicationContext applicationContext = new AnnotationConfigApplicationContext(RootConfig.class);
         TicketClient ticketClient = applicationContext.getBean(TicketClient.class);
 
-        VehicleEntity vehicle1 = buildVehicle("bus1");
+        /*VehicleEntity vehicle1 = buildVehicle("bus1");
         vehicle1 = ticketClient.createOrUpdateVehicle(vehicle1);
+
+        StopEntity stopEntity = buildStop(13D, 24D, "stop name", "stop description");
 
         JourneyEntity journey1 = buildJourney("Odessa", "Kiev", Instant.now(), Instant.now().plusSeconds(10_000L));
         vehicle1.setName("bus 2");
         journey1.addVehicle(vehicle1);
+        journey1.addStop(stopEntity);
 
-        ticketClient.createOrUpdateJourney(journey1);
+        ticketClient.createOrUpdateJourney(journey1);*/
 
         //System.out.println("delete vehicle");
         //ticketClient.removeVehicle(vehicle1);
 
-        System.out.println(ticketClient.findVehicleById(1L, false));
+        System.out.println(ticketClient.findAllVehicles());
+
+        //System.out.println(ticketClient.findVehicleByIds(1L, 2L, 3L, 4L, 5L));
+
+        //System.out.println(ticketClient.findVehicleById(1L, true));
 
         //System.out.println("delete journey");
         //ticketClient.removeById(journey1.getId());
@@ -62,9 +69,15 @@ public class Starter {
         return journeyEntity;
     }
 
-    private static StopEntity buildStop(final Double latitude, final Double longitude) {
+    private static StopEntity buildStop(final Double latitude, final Double longitude, final String name, final String description) {
         if (latitude == null) throw new IllegalArgumentException("latitude must be set");
         if (longitude == null) throw new IllegalArgumentException("longitude must be set");
+        if (StringUtils.isEmpty(name)) throw new IllegalArgumentException("name must be set");
+        if (StringUtils.isEmpty(description)) throw new IllegalArgumentException("description must be set");
+
+        CommonInfo commonInfo = new CommonInfo();
+        commonInfo.setName(name);
+        commonInfo.setDescription(description);
 
         final StopAdditionalInfoEntity stopAddInfoEntity = new StopAdditionalInfoEntity();
         stopAddInfoEntity.setLatitude(latitude);
@@ -72,6 +85,7 @@ public class Starter {
 
         final StopEntity stopEntity = new StopEntity();
         stopEntity.addStopAdditionalInfo(stopAddInfoEntity);
+        stopEntity.setCommonInfo(commonInfo);
 
         return stopEntity;
     }

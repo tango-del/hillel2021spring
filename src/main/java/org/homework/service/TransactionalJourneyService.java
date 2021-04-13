@@ -24,6 +24,8 @@ public class TransactionalJourneyService {
         System.out.println("create journey");
         final JourneyEntity orUpdate = journeyRepository.createOrUpdate(entity);
 
+        //return orUpdate;
+
         System.out.println("get journey by id");
         JourneyEntity journey = journeyRepository.findById(orUpdate.getId()).get();
 

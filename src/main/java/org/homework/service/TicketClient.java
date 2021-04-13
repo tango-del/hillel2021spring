@@ -85,6 +85,10 @@ public class TicketClient {
         return vehicleService.findById(id, withDependencies);
     }
 
+    public Collection<VehicleEntity> findAllVehicles() {
+        return vehicleService.findAll();
+    }
+
 /*    public Collection<Journey> find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {
         if (stationFrom == null) throw new IllegalArgumentException("station from must be set");
         if (stationTo == null) throw new IllegalArgumentException("station to must be set");

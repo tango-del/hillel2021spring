@@ -7,10 +7,11 @@ import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public abstract class CommonRepository<E extends AbstractModifyEntity<ID>, ID extends Serializable>
         implements GenericRepository<E, ID> {
@@ -70,6 +71,11 @@ public abstract class CommonRepository<E extends AbstractModifyEntity<ID>, ID ex
 
     @Override
     public Collection<E> findAll() {
-        return null;
+        //return entityManager.createQuery("from " + entityClass.getSimpleName(), entityClass).getResultList();
+        //return entityManager.createNativeQuery("select * from " + entityClass.getAnnotation(Table.class).name(), entityClass).getResultList();
+        final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        final CriteriaQuery<E> query = criteriaBuilder.createQuery(entityClass);
+        final Root<E> from = query.from(entityClass);
+        return entityManager.createQuery(query.select(from)).getResultList();
     }
 }
