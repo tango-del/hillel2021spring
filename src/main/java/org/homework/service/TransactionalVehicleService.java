@@ -5,6 +5,7 @@ import org.homework.persistence.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -50,5 +51,11 @@ public class TransactionalVehicleService {
     @Transactional(readOnly = true)
     public Collection<VehicleEntity> findAll() {
         return vehicleRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public Collection<VehicleEntity> findAllByName(final String name) {
+        if (StringUtils.isEmpty(name)) throw new IllegalArgumentException("name must be set");
+        return vehicleRepository.findByName(name);
     }
 }

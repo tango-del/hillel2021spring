@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 
@@ -87,6 +88,11 @@ public class TicketClient {
 
     public Collection<VehicleEntity> findAllVehicles() {
         return vehicleService.findAll();
+    }
+
+    public Collection<VehicleEntity> findAllVehiclesByName(final String name) {
+        if (StringUtils.isEmpty(name)) throw new IllegalArgumentException("name must be set");
+        return vehicleService.findAllByName(name);
     }
 
 /*    public Collection<Journey> find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {

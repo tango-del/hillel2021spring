@@ -4,11 +4,15 @@ import lombok.SneakyThrows;
 import org.hibernate.Session;
 import org.homework.persistence.entity.AbstractModifyEntity;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.io.Serializable;
 import java.util.*;
 
@@ -69,6 +73,18 @@ public abstract class CommonRepository<E extends AbstractModifyEntity<ID>, ID ex
     @Override
     public Collection<E> findByIds(ID... ids) {
         return entityManager.unwrap(Session.class).byMultipleIds(entityClass).multiLoad(ids);
+    }
+
+    @Override
+    public Collection<E> findByName(final String name) {
+        if (StringUtils.isEmpty(name)) throw new IllegalArgumentException("name must be set");
+        final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        final CriteriaQuery<E> query = criteriaBuilder.createQuery(entityClass);
+        final Root<E> from = query.from(entityClass);
+        return entityManager.createQuery(query.
+                select(from).
+                where(criteriaBuilder.equal(from.get("name"), criteriaBuilder.literal(name))))
+                .getResultList();
     }
 
     @Override
