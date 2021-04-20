@@ -12,6 +12,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Table;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.io.Serializable;
 import java.util.*;
@@ -81,9 +82,11 @@ public abstract class CommonRepository<E extends AbstractModifyEntity<ID>, ID ex
         final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         final CriteriaQuery<E> query = criteriaBuilder.createQuery(entityClass);
         final Root<E> from = query.from(entityClass);
+        final Predicate byName = criteriaBuilder.equal(from.get("name"), criteriaBuilder.literal(name));
+        final Predicate active = criteriaBuilder.equal(from.get("active"), criteriaBuilder.literal(true));
         return entityManager.createQuery(query.
                 select(from).
-                where(criteriaBuilder.equal(from.get("name"), criteriaBuilder.literal(name))))
+                where(byName, active))
                 .getResultList();
     }
 
