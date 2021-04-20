@@ -6,10 +6,9 @@ import org.homework.persistence.entity.AbstractModifyEntity;
 import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.*;
 
@@ -18,6 +17,8 @@ public abstract class CommonRepository<E extends AbstractModifyEntity<ID>, ID ex
 
     private final Class<E> entityClass;
 
+    final String entityTableName;
+
     @PersistenceContext
     protected EntityManager entityManager;
 
@@ -25,6 +26,7 @@ public abstract class CommonRepository<E extends AbstractModifyEntity<ID>, ID ex
         if (Objects.isNull(entityClass)) throw new IllegalArgumentException("entityClass must be set");
 
         this.entityClass = entityClass;
+        entityTableName = entityClass.getAnnotation(Table.class).name();
     }
 
     @Override
@@ -72,10 +74,17 @@ public abstract class CommonRepository<E extends AbstractModifyEntity<ID>, ID ex
     @Override
     public Collection<E> findAll() {
         //return entityManager.createQuery("from " + entityClass.getSimpleName(), entityClass).getResultList();
-        //return entityManager.createNativeQuery("select * from " + entityClass.getAnnotation(Table.class).name(), entityClass).getResultList();
-        final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        final CriteriaQuery<E> query = criteriaBuilder.createQuery(entityClass);
-        final Root<E> from = query.from(entityClass);
-        return entityManager.createQuery(query.select(from)).getResultList();
+        //return entityManager.createNativeQuery("select * from " + entityTableName, entityClass).getResultList();
+//        final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+//        final CriteriaQuery<E> query = criteriaBuilder.createQuery(entityClass);
+//        final Root<E> from = query.from(entityClass);
+//        return entityManager.createQuery(query.select(from)).getResultList();
+        System.out.println("call findAll() in CommonRepository");
+
+        return entityManager.createStoredProcedureQuery("find_all", entityClass).
+                registerStoredProcedureParameter(1, Class.class, ParameterMode.REF_CURSOR).
+                registerStoredProcedureParameter(2, String.class, ParameterMode.IN).
+                setParameter(2, entityTableName).
+                getResultList();
     }
 }

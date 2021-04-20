@@ -6,10 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -23,6 +20,12 @@ import java.util.Set;
 @NamedQueries(value = {
         @NamedQuery(name = "findAll", query = "from VehicleEntity ")
 })
+@NamedStoredProcedureQueries(
+        @NamedStoredProcedureQuery(name = "findAllVehicles",
+                                   procedureName = "find_all_vehicles",
+                                   parameters = @StoredProcedureParameter(mode = ParameterMode.REF_CURSOR, type = Class.class),
+                                   resultClasses = VehicleEntity.class)
+)
 public class VehicleEntity extends AbstractModifyEntity<Long> {
 
     @Column(name = "name")
