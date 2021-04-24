@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.StringJoiner;
 
 
 @Entity
@@ -51,11 +52,11 @@ public class VehicleEntity extends AbstractModifyEntity<Long> {
     //@Embedded
     //private CommonInfo commonInfo;
 
-
     @Override
     public String toString() {
-        return "VehicleEntity{" +
-                "name='" + name + '\'' +
-                '}';
+        return new StringJoiner(", ", VehicleEntity.class.getSimpleName() + "[", "]")
+                .add("id='" + getId() + "'")
+                .add("name='" + name + "'")
+                .toString();
     }
 }
