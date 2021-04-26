@@ -1,5 +1,6 @@
 package org.homework.persistence.repository;
 
+import org.hibernate.query.criteria.internal.OrderImpl;
 import org.homework.persistence.entity.JourneyEntity_;
 import org.homework.persistence.entity.VehicleEntity;
 import org.homework.persistence.entity.VehicleEntity_;
@@ -37,10 +38,12 @@ public class VehicleRepository extends CommonRepository<VehicleEntity, Long> {
         final Predicate active = criteriaBuilder.equal(from.get(VehicleEntity_.ACTIVE), criteriaBuilder.parameter(Boolean.class, "activeParam"));
         return entityManager.createQuery(query.
                 select(from).
-                where(byName, active)).
+                where(byName, active).orderBy(new OrderImpl(from.get(VehicleEntity_.ID), false))).
                 setParameter("nameParam", name).
                 setParameter("activeParam", true).
                 setParameter("stationFromParam", "Odessa").
+                setFirstResult(2).
+                setMaxResults(3).
                 getResultList();
 
         /*return entityManager.createQuery("select v from VehicleEntity v left join v.journeys js on js.vehicle.id = v.id order by v.id desc", VehicleEntity.class)
