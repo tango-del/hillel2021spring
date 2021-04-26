@@ -28,7 +28,7 @@ public class VehicleRepository extends CommonRepository<VehicleEntity, Long> {
 
     @Override
     public Collection<VehicleEntity> findByName(String name) {
-        final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        /*final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         final CriteriaQuery<VehicleEntity> query = criteriaBuilder.createQuery(VehicleEntity.class);
         final Root<VehicleEntity> from = query.from(VehicleEntity.class);
         final Join<Object, Object> journeys = from.join(VehicleEntity_.JOURNEYS, JoinType.LEFT);
@@ -38,13 +38,20 @@ public class VehicleRepository extends CommonRepository<VehicleEntity, Long> {
         final Predicate active = criteriaBuilder.equal(from.get(VehicleEntity_.ACTIVE), criteriaBuilder.parameter(Boolean.class, "activeParam"));
         return entityManager.createQuery(query.
                 select(from).
-                where(byName, active).orderBy(new OrderImpl(from.get(VehicleEntity_.ID), false))).
+                where(byName, active).orderBy(new OrderImpl(from.get(VehicleEntity_.ID), false))
+        ).
                 setParameter("nameParam", name).
                 setParameter("activeParam", true).
                 setParameter("stationFromParam", "Odessa").
                 setFirstResult(2).
                 setMaxResults(3).
-                getResultList();
+                getResultList();*/
+
+        return entityManager.createQuery("select v from VehicleEntity v left join v." + VehicleEntity_.JOURNEYS +
+                                            " js on js.vehicle.id = v.id order by v.id desc", VehicleEntity.class)
+                .setFirstResult(2)
+                .setMaxResults(3)
+                .getResultList();
 
         /*return entityManager.createQuery("select v from VehicleEntity v left join v.journeys js on js.vehicle.id = v.id order by v.id desc", VehicleEntity.class)
                 .setFirstResult(2)
