@@ -4,25 +4,17 @@ import org.homework.persistence.entity.VehicleEntity;
 import org.homework.persistence.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
-import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.StringUtils;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceContext;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class TransactionalVehicleService {
+public class NewTransactionalVehicleService {
 
     @Autowired
     private VehicleRepository vehicleRepository;
@@ -36,7 +28,8 @@ public class TransactionalVehicleService {
     @PersistenceContext
     private EntityManagerFactory entityManagerFactory;*/
 
-    @Transactional
+    //@Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRED)
     public VehicleEntity createOrUpdate(final VehicleEntity vehicleEntity) {
         if (Objects.isNull(vehicleEntity)) throw new IllegalArgumentException("vehicleEntity must be set");
 
@@ -85,17 +78,9 @@ public class TransactionalVehicleService {
         return vehicleRepository.findAll();
     }
 
-    @Autowired
-    private NewTransactionalVehicleService newTransactionalVehicleService;
-
     @Transactional(readOnly = true)
     public Collection<VehicleEntity> findAllByName(final String name) {
         if (StringUtils.isEmpty(name)) throw new IllegalArgumentException("name must be set");
-        final Collection<VehicleEntity> byName = vehicleRepository.findByName(name);
-        final VehicleEntity next = byName.iterator().next();
-        next.setName(String.valueOf(System.currentTimeMillis()));
-        System.out.printf("save vehicle with id = %s and new value %s \n", next.getId(), next.getName());
-        newTransactionalVehicleService.createOrUpdate(next);
-        return byName;
+        return vehicleRepository.findByName(name);
     }
 }
