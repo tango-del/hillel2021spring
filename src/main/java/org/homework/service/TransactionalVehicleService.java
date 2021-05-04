@@ -4,9 +4,17 @@ import org.homework.persistence.entity.VehicleEntity;
 import org.homework.persistence.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.StringUtils;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceContext;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
@@ -18,11 +26,33 @@ public class TransactionalVehicleService {
     @Autowired
     private VehicleRepository vehicleRepository;
 
-    @Transactional
+    @Autowired
+    private TransactionTemplate transactionTemplate;
+
+    @Autowired
+    private PlatformTransactionManager platformTransactionManager;
+
+    @PersistenceContext
+    private EntityManagerFactory entityManagerFactory;
+
     public VehicleEntity createOrUpdate(final VehicleEntity vehicleEntity) {
         if (Objects.isNull(vehicleEntity)) throw new IllegalArgumentException("vehicleEntity must be set");
 
-        return vehicleRepository.createOrUpdate(vehicleEntity);
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        final EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.persist(vehicleEntity);
+        transaction.commit();
+        transaction.rollback();
+
+        DefaultTransactionDefinition transactionDefinition = new DefaultTransactionDefinition();
+        final TransactionStatus transaction1 = platformTransactionManager.getTransaction(transactionTemplate);
+        final VehicleEntity orUpdate = vehicleRepository.createOrUpdate(vehicleEntity);
+        platformTransactionManager.commit(transaction1);
+        platformTransactionManager.rollback(transaction1);
+        return orUpdate;
+        //return transactionTemplate.execute((status) -> vehicleRepository.createOrUpdate(vehicleEntity));
+        //return vehicleRepository.createOrUpdate(vehicleEntity);
     }
 
     @Transactional
