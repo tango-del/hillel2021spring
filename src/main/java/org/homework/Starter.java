@@ -96,7 +96,7 @@ public class Starter {
         if (StringUtils.isEmpty(name)) throw new IllegalArgumentException("name must be set");
 
         VehicleEntity vehicleEntity = new VehicleEntity();
-        vehicleEntity.setName(name);
+        vehicleEntity.setVehicleName(name);
         return vehicleEntity;
     }
 }

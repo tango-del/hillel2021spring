@@ -55,7 +55,7 @@ public class TransactionalJourneyService {
         final Optional<JourneyEntity> byId = journeyRepository.findById(id);
         if (withDependencies && byId.isPresent()) {
             final JourneyEntity journeyEntity = byId.get();
-            journeyEntity.getVehicle().getName();
+            journeyEntity.getVehicle().getVehicleName();
             journeyEntity.getStops().size();
         }
         return byId;

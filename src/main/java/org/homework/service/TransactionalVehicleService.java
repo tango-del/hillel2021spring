@@ -1,6 +1,8 @@
 package org.homework.service;
 
 import org.homework.persistence.entity.VehicleEntity;
+import org.homework.persistence.entity.VehicleEntity_;
+import org.homework.persistence.jpa.repository.VehicleJpaRepository;
 import org.homework.persistence.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,16 +18,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TransactionalVehicleService {
 
     @Autowired
-    private VehicleRepository vehicleRepository;
+    private VehicleJpaRepository vehicleRepository;
+    //private VehicleRepository vehicleRepository;
 /*
     @Autowired
     private TransactionTemplate transactionTemplate;
@@ -54,20 +54,20 @@ public class TransactionalVehicleService {
         platformTransactionManager.rollback(transaction1);
         return orUpdate;
         return transactionTemplate.execute((status) -> vehicleRepository.createOrUpdate(vehicleEntity));*/
-        return vehicleRepository.createOrUpdate(vehicleEntity);
+        return vehicleRepository.save(vehicleEntity);
     }
 
     @Transactional
     public void remove(final VehicleEntity vehicle) {
         if (Objects.isNull(vehicle)) throw new IllegalArgumentException("vehicle must be set");
 
-        vehicleRepository.remove(vehicle);
+        vehicleRepository.delete(vehicle);
     }
 
     @Transactional(readOnly = true)
     public Collection<VehicleEntity> findByIds(Long... ids) {
         if (ids.length == 0) return Collections.emptyList();
-        return vehicleRepository.findByIds(ids);
+        return (Collection<VehicleEntity>) vehicleRepository.findAllById(Arrays.asList(ids));
     }
 
     @Transactional(readOnly = true)
@@ -82,20 +82,14 @@ public class TransactionalVehicleService {
 
     @Transactional(readOnly = true)
     public Collection<VehicleEntity> findAll() {
-        return vehicleRepository.findAll();
+        return (Collection<VehicleEntity>) vehicleRepository.findAll();
     }
 
-    @Autowired
-    private NewTransactionalVehicleService newTransactionalVehicleService;
 
     @Transactional(readOnly = true)
     public Collection<VehicleEntity> findAllByName(final String name) {
         if (StringUtils.isEmpty(name)) throw new IllegalArgumentException("name must be set");
-        final Collection<VehicleEntity> byName = vehicleRepository.findByName(name);
-        final VehicleEntity next = byName.iterator().next();
-        next.setName(String.valueOf(System.currentTimeMillis()));
-        System.out.printf("save vehicle with id = %s and new value %s \n", next.getId(), next.getName());
-        newTransactionalVehicleService.createOrUpdate(next);
+        final Collection<VehicleEntity> byName = vehicleRepository.findByVehicleName(name);
         return byName;
     }
 }
