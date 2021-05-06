@@ -30,7 +30,7 @@ import java.util.StringJoiner;
 public class VehicleEntity extends AbstractModifyEntity<Long> {
 
     @Column(name = "name")
-    private String name;
+    private String vehicleName;
 
     @OneToMany(mappedBy = "vehicle")//, cascade = {CascadeType.REMOVE})
     private Set<JourneyEntity> journeys = new HashSet<>();
@@ -56,7 +56,7 @@ public class VehicleEntity extends AbstractModifyEntity<Long> {
     public String toString() {
         return new StringJoiner(", ", VehicleEntity.class.getSimpleName() + "[", "]")
                 .add("id='" + getId() + "'")
-                .add("name='" + name + "'")
+                .add("name='" + vehicleName + "'")
                 .toString();
     }
 }
