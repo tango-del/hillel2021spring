@@ -1,23 +1,12 @@
 package org.homework.service;
 
 import org.homework.persistence.entity.VehicleEntity;
-import org.homework.persistence.entity.VehicleEntity_;
 import org.homework.persistence.jpa.repository.VehicleJpaRepository;
-import org.homework.persistence.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
-import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.StringUtils;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.PersistenceContext;
 import java.util.*;
 
 @Service
@@ -89,7 +78,7 @@ public class TransactionalVehicleService {
     @Transactional(readOnly = true)
     public Collection<VehicleEntity> findAllByName(final String name) {
         if (StringUtils.isEmpty(name)) throw new IllegalArgumentException("name must be set");
-        final Collection<VehicleEntity> byName = vehicleRepository.findByVehicleName(name);
+        final Collection<VehicleEntity> byName = vehicleRepository.findByConditions(name, 1L, 30L);
         return byName;
     }
 }
