@@ -1,8 +1,11 @@
 package org.homework.service;
 
 import org.homework.persistence.entity.VehicleEntity;
+import org.homework.persistence.entity.VehicleEntity_;
 import org.homework.persistence.jpa.repository.VehicleJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -78,7 +81,11 @@ public class TransactionalVehicleService {
     @Transactional(readOnly = true)
     public Collection<VehicleEntity> findAllByName(final String name) {
         if (StringUtils.isEmpty(name)) throw new IllegalArgumentException("name must be set");
-        final Collection<VehicleEntity> byName = vehicleRepository.findByConditions(name, 1L, 30L);
+        final Collection<VehicleEntity> byName = vehicleRepository.findByConditions(
+                name,
+                1L,
+                30L,
+                PageRequest.of(2, 3, Sort.by(VehicleEntity_.ID)));
         return byName;
     }
 }
