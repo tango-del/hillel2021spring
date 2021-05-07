@@ -87,12 +87,21 @@ public class TransactionalVehicleService {
                 1L,
                 30L,
                 PageRequest.of(2, 3, Sort.by(VehicleEntity_.ID)));*/
-        final Page<VehicleEntity> byName = vehicleRepository.findByConditionsParamNative(
+        /*final Page<VehicleEntity> byName = vehicleRepository.findByConditionsParamNative(
                 name,
                 1L,
                 30L,
-                PageRequest.of(1, 3, Sort.by(VehicleEntity_.ID)));
+                PageRequest.of(1, 3, Sort.by(VehicleEntity_.ID)));*/
+//        return byName.getContent();
 
-        return byName.getContent();
+        //return vehicleRepository.findByName(name);
+        return vehicleRepository.findOnlyActive();
+    }
+
+    @Transactional
+    public void disableById(Long id) {
+        if (id == 0) return;
+
+        vehicleRepository.disableById(id);
     }
 }

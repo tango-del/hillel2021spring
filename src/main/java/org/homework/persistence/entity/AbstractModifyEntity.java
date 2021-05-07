@@ -4,14 +4,16 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.homework.persistence.entity.util.YesNoConverter;
+import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.Instant;
 
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class AbstractModifyEntity<ID> {
+public abstract class AbstractModifyEntity<ID extends Serializable> implements Persistable<ID> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +31,9 @@ public abstract class AbstractModifyEntity<ID> {
     @Column(name = "active")
     @Convert(converter = YesNoConverter.class)
     private boolean active = true;
+
+    @Override
+    public boolean isNew() {
+        return id == null;
+    }
 }

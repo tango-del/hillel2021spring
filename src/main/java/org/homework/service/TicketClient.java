@@ -95,6 +95,12 @@ public class TicketClient {
         return vehicleService.findAllByName(name);
     }
 
+    public void disableVehicleById(Long id) {
+        if (id == 0) return;
+
+        vehicleService.disableById(id);
+    }
+
 /*    public Collection<Journey> find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {
         if (stationFrom == null) throw new IllegalArgumentException("station from must be set");
         if (stationTo == null) throw new IllegalArgumentException("station to must be set");
