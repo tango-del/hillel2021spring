@@ -4,6 +4,7 @@ import org.homework.persistence.entity.VehicleEntity;
 import org.homework.persistence.entity.VehicleEntity_;
 import org.homework.persistence.jpa.repository.VehicleJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -81,11 +82,17 @@ public class TransactionalVehicleService {
     @Transactional(readOnly = true)
     public Collection<VehicleEntity> findAllByName(final String name) {
         if (StringUtils.isEmpty(name)) throw new IllegalArgumentException("name must be set");
-        final Collection<VehicleEntity> byName = vehicleRepository.findByConditions(
+        /*final Collection<VehicleEntity> byName = vehicleRepository.findByConditions(
                 name,
                 1L,
                 30L,
-                PageRequest.of(2, 3, Sort.by(VehicleEntity_.ID)));
-        return byName;
+                PageRequest.of(2, 3, Sort.by(VehicleEntity_.ID)));*/
+        final Page<VehicleEntity> byName = vehicleRepository.findByConditionsParamNative(
+                name,
+                1L,
+                30L,
+                PageRequest.of(1, 3, Sort.by(VehicleEntity_.ID)));
+
+        return byName.getContent();
     }
 }
