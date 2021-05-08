@@ -38,4 +38,7 @@ public interface VehicleJpaRepository extends CommonJpaRepository<VehicleEntity,
     Page<VehicleEntity> findByConditionsParamNative(@Param("param_name") String name,
                                                     @Param("id_from") Long idFrom,
                                                     @Param("id_to") Long idTo, Pageable page);
+
+
+    List<SimpleVehicleDto> findAllByActiveIsTrue();
 }

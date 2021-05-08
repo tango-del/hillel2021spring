@@ -2,6 +2,7 @@ package org.homework.service;
 
 import org.homework.persistence.entity.VehicleEntity;
 import org.homework.persistence.entity.VehicleEntity_;
+import org.homework.persistence.jpa.repository.SimpleVehicleDto;
 import org.homework.persistence.jpa.repository.VehicleJpaRepository;
 import org.homework.persistence.jpa.repository.specification.VehicleSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,5 +123,9 @@ public class TransactionalVehicleService {
         if (id == 0) return;
 
         vehicleRepository.disableById(id);
+    }
+
+    public List<SimpleVehicleDto> listAllSimpleVehicles() {
+        return vehicleRepository.findAllByActiveIsTrue();
     }
 }

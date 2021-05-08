@@ -3,6 +3,7 @@ package org.homework.service;
 import org.homework.persistence.entity.JourneyEntity;
 import org.homework.persistence.entity.StopEntity;
 import org.homework.persistence.entity.VehicleEntity;
+import org.homework.persistence.jpa.repository.SimpleVehicleDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -104,6 +105,10 @@ public class TicketClient {
     public Collection<VehicleEntity> findAllVehiclesByNameAndNotActive(final String name) {
         if (StringUtils.isEmpty(name)) throw new IllegalArgumentException("name must be set");
         return vehicleService.findAllByNameAndNotActive(name);
+    }
+
+    public List<SimpleVehicleDto> listAllSimpleVehicles() {
+        return vehicleService.listAllSimpleVehicles();
     }
 
 /*    public Collection<Journey> find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {

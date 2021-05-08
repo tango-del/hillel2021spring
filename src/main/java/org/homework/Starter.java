@@ -3,6 +3,7 @@ package org.homework;
 import org.homework.config.RootConfig;
 import org.homework.persistence.entity.*;
 import org.homework.persistence.entity.enums.DirectionType;
+import org.homework.persistence.jpa.repository.SimpleVehicleDto;
 import org.homework.service.TicketClient;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -36,7 +37,8 @@ public class Starter {
         //System.out.println(ticketClient.findAllVehiclesByName("bus 2"));
         //ticketClient.disableVehicleById(17L);
 
-        System.out.println(ticketClient.findAllVehiclesByNameAndNotActive("bus 2"));
+        //System.out.println(ticketClient.findAllVehiclesByNameAndNotActive("bus 2"));
+        ticketClient.listAllSimpleVehicles().forEach(SimpleVehicleDto::toStrings);
 
         //System.out.println(ticketClient.findVehicleByIds(1L, 2L, 3L, 4L, 5L));
 
