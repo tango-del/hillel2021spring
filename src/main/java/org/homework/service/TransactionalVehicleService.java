@@ -112,7 +112,9 @@ public class TransactionalVehicleService {
 
         final Example<VehicleEntity> example = Example.of(vehicleEntity);
 
-        return vehicleRepository.findAll(VehicleSpecification.byName(name).and(VehicleSpecification.onlyNoActive()));
+        //return vehicleRepository.findAll(VehicleSpecification.byName(name).and(VehicleSpecification.onlyNoActive()));
+
+        return vehicleRepository.findAll(VehicleSpecification.byNameAndExample(name, vehicleEntity));
     }
 
     @Transactional
