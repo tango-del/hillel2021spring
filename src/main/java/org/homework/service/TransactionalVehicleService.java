@@ -3,6 +3,7 @@ package org.homework.service;
 import org.homework.persistence.entity.VehicleEntity;
 import org.homework.persistence.entity.VehicleEntity_;
 import org.homework.persistence.jpa.repository.VehicleJpaRepository;
+import org.homework.persistence.jpa.repository.specification.VehicleSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -109,7 +110,9 @@ public class TransactionalVehicleService {
         vehicleEntity.setActive(false);
         vehicleEntity.setId(17L);
 
-        return vehicleRepository.findAll(Example.of(vehicleEntity));
+        final Example<VehicleEntity> example = Example.of(vehicleEntity);
+
+        return vehicleRepository.findAll(VehicleSpecification.byName(name).and(VehicleSpecification.onlyNoActive()));
     }
 
     @Transactional
