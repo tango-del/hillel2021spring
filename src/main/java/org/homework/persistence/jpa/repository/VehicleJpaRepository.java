@@ -11,7 +11,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.Collection;
 import java.util.List;
 
-public interface VehicleJpaRepository extends CommonJpaRepository<VehicleEntity, Long>, JpaRepository<VehicleEntity, Long> {
+//public interface VehicleJpaRepository extends CommonJpaRepository<VehicleEntity, Long>, JpaRepository<VehicleEntity, Long> {
+public interface VehicleJpaRepository extends CommonJpaRepository<VehicleEntity, Long> {
 
     Collection<VehicleEntity> findByVehicleName(String name);
 
