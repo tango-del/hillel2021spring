@@ -34,7 +34,9 @@ public class Starter {
         //System.out.println(ticketClient.findAllVehicles());
 
         //System.out.println(ticketClient.findAllVehiclesByName("bus 2"));
-        ticketClient.disableVehicleById(17L);
+        //ticketClient.disableVehicleById(17L);
+
+        System.out.println(ticketClient.findAllVehiclesByNameAndNotActive("bus 2"));
 
         //System.out.println(ticketClient.findVehicleByIds(1L, 2L, 3L, 4L, 5L));
 

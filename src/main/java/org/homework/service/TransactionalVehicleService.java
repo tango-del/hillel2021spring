@@ -4,6 +4,7 @@ import org.homework.persistence.entity.VehicleEntity;
 import org.homework.persistence.entity.VehicleEntity_;
 import org.homework.persistence.jpa.repository.VehicleJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -95,7 +96,20 @@ public class TransactionalVehicleService {
 //        return byName.getContent();
 
         //return vehicleRepository.findByName(name);
+
         return vehicleRepository.findOnlyActive();
+    }
+
+    @Transactional(readOnly = true)
+    public Collection<VehicleEntity> findAllByNameAndNotActive(final String name) {
+        if (StringUtils.isEmpty(name)) throw new IllegalArgumentException("name must be set");
+
+        VehicleEntity vehicleEntity = new VehicleEntity();
+        vehicleEntity.setVehicleName(name);
+        vehicleEntity.setActive(false);
+        vehicleEntity.setId(17L);
+
+        return vehicleRepository.findAll(Example.of(vehicleEntity));
     }
 
     @Transactional

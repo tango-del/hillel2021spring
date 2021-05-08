@@ -101,6 +101,11 @@ public class TicketClient {
         vehicleService.disableById(id);
     }
 
+    public Collection<VehicleEntity> findAllVehiclesByNameAndNotActive(final String name) {
+        if (StringUtils.isEmpty(name)) throw new IllegalArgumentException("name must be set");
+        return vehicleService.findAllByNameAndNotActive(name);
+    }
+
 /*    public Collection<Journey> find(final String stationFrom, final String stationTo, final LocalDate dateFrom, final LocalDate dateTo) {
         if (stationFrom == null) throw new IllegalArgumentException("station from must be set");
         if (stationTo == null) throw new IllegalArgumentException("station to must be set");
